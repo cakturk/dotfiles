@@ -20,6 +20,13 @@ set smartcase
 set incsearch		" do incremental searching
 set history=1000
 
+" default indent settings
+set shiftwidth=4
+set expandtab
+set autoindent
+
+set linebreak
+
 set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options
 

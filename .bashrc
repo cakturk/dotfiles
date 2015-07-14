@@ -1,5 +1,8 @@
 export PS1="[\u@ \W]\\$ "
-alias ll="ls -lv"
+
+alias ll='ls -lv'
+alias ls='ls -GFh'
+alias grep='grep --color=auto'
 
 # Avoid duplicates
 export HISTCONTROL=ignoredups:erasedups

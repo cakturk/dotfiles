@@ -29,6 +29,7 @@ set linebreak
 
 set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options
+set formatoptions+=j " Delete comment character when joining commented lines
 
 colorscheme seoul256
 

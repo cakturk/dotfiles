@@ -23,6 +23,7 @@ set history=1000
 " default indent settings
 set shiftwidth=4
 set expandtab
+set smarttab
 set autoindent
 
 set linebreak

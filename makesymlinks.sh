@@ -9,7 +9,7 @@
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
 files=".vimrc .tmux.conf"    # list of files/folders to symlink in homedir
-bash_files=".bashrc .bash_profile"
+bash_files=".bashrc .bash_profile .inputrc"
 
 os=$(uname)
 if [[ ${os} == "Darwin" ]]; then

@@ -51,6 +51,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'ervandew/supertab'
 
 call plug#end()
 

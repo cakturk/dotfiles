@@ -52,6 +52,7 @@ Plug 'bling/vim-airline'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
+Plug 'cakturk/kernel-coding-style'
 
 call plug#end()
 

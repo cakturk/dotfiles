@@ -11,3 +11,8 @@ export HISTSIZE=1500
 export HISTFILESIZE=1500
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
+
+# without this mutt screws up multibyte characters
+export LC_ALL=en_US.UTF-8
+# keep your line length at a reasonable level to stay sane
+export MANWIDTH=85

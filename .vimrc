@@ -32,7 +32,8 @@ set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options
 set formatoptions+=j " Delete comment character when joining commented lines
 
-colorscheme seoul256
+set splitbelow
+set splitright
 
 let mapleader   = " "
 let localleader = " "
@@ -45,6 +46,7 @@ Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'kien/ctrlp.vim', { 'on':  'CtrlP' }
+Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 
 " Standard plugins
 Plug 'tpope/vim-fugitive'
@@ -53,8 +55,11 @@ Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
 Plug 'cakturk/kernel-coding-style'
+Plug 'flazz/vim-colorschemes'
 
 call plug#end()
+
+colorscheme seoul256
 
 " Trigger to load CtrlP
 nnoremap <silent> <c-p> :CtrlP<cr>

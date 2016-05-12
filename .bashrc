@@ -1,4 +1,4 @@
-export PS1="[\u@ \W]\\$ "
+export PS1="[\u@\h \W]\\$ "
 
 alias ll='ls -lv'
 alias ls='ls -GFh'

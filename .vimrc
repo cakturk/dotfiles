@@ -59,7 +59,7 @@ Plug 'flazz/vim-colorschemes'
 
 call plug#end()
 
-colorscheme seoul256
+silent! colorscheme seoul256
 
 " Trigger to load CtrlP
 nnoremap <silent> <c-p> :CtrlP<cr>

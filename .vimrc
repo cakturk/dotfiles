@@ -67,8 +67,11 @@ nnoremap <silent> <c-p> :CtrlP<cr>
 nnoremap <silent> <leader>e :NERDTreeToggle<CR>
 " Toggle hlsearch
 nnoremap <silent> <leader>l :nohlsearch<CR><C-L>
+" Toggle between alternate files
+nnoremap <silent> <leader>t :e #<CR>
 
 augroup load_us_ultisnips
 	autocmd!
 	autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets')
+                    \| autocmd! load_us_ultisnips
 augroup END

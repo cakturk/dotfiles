@@ -1,0 +1,42 @@
+#!/bin/sh
+
+set -e
+
+# http://stackoverflow.com/a/246128/6740471
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+COMMON_FILES=".vimrc .tmux.conf"
+MAC_FILES=".inputrc .bashrc .bash_profile"
+OS=$(uname 2> /dev/null)
+BACKUPDIR=
+[ "$OS" = "Darwin" ] && COMMON_FILES="$COMMON_FILES $MAC_FILES"
+
+backupfile() {
+    if [ -z "$BACKUPDIR" ]; then
+        BACKUPDIR=$(mktemp -d "$HOME/dotfiles.bak.XXX")
+        echo "Created backup dir: $BACKUPDIR"
+    fi
+    cp $1 $BACKUPDIR
+}
+
+cleanup() {
+    # Remove backup dir if it is empty
+    if [ -n "$(ls -A foo)" ]; then
+        echo "Removeing dir"
+        rm -fr $BACKUPDIR
+    fi
+}
+trap cleanup EXIT
+
+# Create symlink to common rc files
+for f in $COMMON_FILES; do
+    target="$HOME/${f##*/}"
+
+    # Remove target if it is a symlink else backup in a dotfiles.bak.XXXX dir
+    if [ -L "$target" ]; then
+        rm -f $target
+    else
+        echo "fi"
+    fi
+done
+
+echo "files: $COMMON_FILES"

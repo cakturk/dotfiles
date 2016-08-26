@@ -16,3 +16,8 @@ shopt -s histappend
 export LC_ALL=en_US.UTF-8
 # keep your line length at a reasonable level to stay sane
 export MANWIDTH=85
+
+# Get a FreeBSD csh like C-w behaviour
+# http://unix.stackexchange.com/a/58491
+stty werase undef
+bind '\C-w:unix-filename-rubout'

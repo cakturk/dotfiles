@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Fail fast
 set -e
 
 # http://stackoverflow.com/a/246128/6740471
@@ -10,6 +11,24 @@ OS=$(uname 2> /dev/null)
 BACKUPDIR=$(mktemp -d "$HOME/dotfiles.bak.XXX")
 
 [ "$OS" = "Darwin" ] && COMMON_FILES="$COMMON_FILES $MAC_FILES"
+
+# Check if we have a running desktop environment. I am not sure this
+# will work for bare window managers without a display manager.
+# http://unix.stackexchange.com/a/116694
+has_running_de() {
+    if [ "$XDG_CURRENT_DESKTOP" = "" ]
+    then
+        desktop=$(echo "$XDG_DATA_DIRS" | sed 's/.*\(xfce\|kde\|gnome\).*/\1/')
+    else
+        desktop=$XDG_CURRENT_DESKTOP
+    fi
+
+    desktop=${desktop,,}  # convert to lower case
+    if [ -z "$desktop" ]; then
+        return 1
+    fi
+    return 0
+}
 
 backupfile() {
     cp -f $1 $BACKUPDIR
@@ -40,4 +59,13 @@ for f in $COMMON_FILES; do
     ln -sf "$DIR/$f" ~/
 done
 
-echo "files: $COMMON_FILES"
+# Setup i3 configuration files for Linux
+if [ "$OS" = "Linux" ] && has_running_de; then
+    i3confdir="$HOME/.config/i3"
+    i3conf="$i3confdir/config"
+    if [ ! -L "$i3conf" ] && [ -f "$i3conf" ]; then
+        backupfile "$i3conf"
+    fi
+    mkdir -p "$i3confdir"
+    ln -sf "$DIR/config" "$i3conf"
+fi

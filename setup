@@ -7,36 +7,37 @@ DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 COMMON_FILES=".vimrc .tmux.conf"
 MAC_FILES=".inputrc .bashrc .bash_profile"
 OS=$(uname 2> /dev/null)
-BACKUPDIR=
+BACKUPDIR=$(mktemp -d "$HOME/dotfiles.bak.XXX")
+
 [ "$OS" = "Darwin" ] && COMMON_FILES="$COMMON_FILES $MAC_FILES"
 
 backupfile() {
-    if [ -z "$BACKUPDIR" ]; then
-        BACKUPDIR=$(mktemp -d "$HOME/dotfiles.bak.XXX")
-        echo "Created backup dir: $BACKUPDIR"
-    fi
-    cp $1 $BACKUPDIR
+    cp -f $1 $BACKUPDIR
 }
 
 cleanup() {
     # Remove backup dir if it is empty
-    if [ -n "$(ls -A foo)" ]; then
-        echo "Removeing dir"
+    if [ -z "$(ls -A $BACKUPDIR)" ]; then
         rm -fr $BACKUPDIR
     fi
 }
 trap cleanup EXIT
 
-# Create symlink to common rc files
+# Create symlinks to common rc files
 for f in $COMMON_FILES; do
     target="$HOME/${f##*/}"
 
-    # Remove target if it is a symlink else backup in a dotfiles.bak.XXXX dir
+    # Remove target if it is a symlink, otherwise copy
+    # it to the dotfiles.bak.XXX dir
     if [ -L "$target" ]; then
         rm -f $target
     else
-        echo "fi"
+        if [ -f "$target" ]; then
+            backupfile $target
+        fi
     fi
+
+    ln -sf "$DIR/$f" ~/
 done
 
 echo "files: $COMMON_FILES"

@@ -25,7 +25,7 @@ set shiftwidth=4
 set expandtab
 set smarttab
 set autoindent
-
+set colorcolumn=80
 set linebreak
 
 set wildignore=*.o,*.obj,*~,*.ko

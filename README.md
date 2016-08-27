@@ -1,2 +1,2 @@
 # dotfiles
-dotfiles for Linux/OS X
+dotfiles for Linux/FreeBSD/OS X

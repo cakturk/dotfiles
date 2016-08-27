@@ -36,6 +36,9 @@ set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options
 set formatoptions+=j " Delete comment character when joining commented lines
 
+" Only insert the longest common text of the matches
+set completeopt+=longest
+
 set splitbelow
 set splitright
 

@@ -1,0 +1,11 @@
+[user]
+	name = Cihangir Akturk
+	email = cakturk@gmail.com
+[sendemail]
+	from = Cihangir Akturk <cakturk@gmail.com>
+	smtpServer = smtp.gmail.com
+	smtpUser = cakturk@gmail.com
+	smtpEncryption = tls
+	smtpServerPort = 587
+[core]
+	editor = vim

@@ -61,6 +61,9 @@ call plug#end()
 
 silent! colorscheme seoul256
 
+" Tell the NERDTree to respect 'wildignore'
+let NERDTreeRespectWildIgnore=1
+
 " Trigger to load CtrlP
 nnoremap <silent> <c-p> :CtrlP<cr>
 " Toggle NERDTree

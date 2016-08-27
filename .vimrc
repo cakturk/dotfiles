@@ -29,8 +29,10 @@ set shiftwidth=4
 set expandtab
 set smarttab
 set autoindent
-set colorcolumn=80
 set linebreak
+
+" Display right margin at column 80
+autocmd Filetype c,cpp,python,sh,ruby setlocal colorcolumn=80
 
 set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options

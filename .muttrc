@@ -1,0 +1,55 @@
+set from = "cakturk@gmail.com"
+set realname = "Cihangir Akturk"
+
+set imap_user = "cakturk@gmail.com"
+#set imap_pass = "yourpassword"
+
+# Remote Gmail folders
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed ="+[Google Mail]/Drafts"
+
+# gmail delete work-around without trash patch
+# macro index d "<save-message>="[Gmail]/Trash<enter><enter>"
+# macro pager d "<save-message>="[Gmail]/Trash<enter><enter>"
+# https://github.com/panthomakos/dotfiles/blob/master/.muttrc
+# Gmail Delete
+#   This works exactly as Gmail's delete does - by moving a message to the trash
+#   folder. It then refreshes the index view and collapses all threads. In the
+#   pager view, first exit to the index view and then delete the message.
+macro index d \
+  "<save-message>=[Gmail]/Trash<enter><enter>" \
+    "Trash"
+macro pager d "<exit>d" "Trash"
+macro index D "<tag-thread><tag-prefix>d" "Trash Thread"
+
+# without this "[Gmail]/All Mail" doesn't work
+bind editor <space> noop
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change-folder>=[Gmail]/All Mail<enter>"
+macro index gs "<change-folder>=[Gmail]/Starred<enter>" "Go to starred messages"
+macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+macro index gk "<change-folder>=kernelnewbies<enter>" "Go to kernelnewbies"
+
+# local folders for cached headers and certificates
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file=~/.mutt/cache/mutt-certs
+# gmail quirk on os x
+set smtp_authenticators = 'gssapi:login'
+
+# smtp settings
+set smtp_url = "smtp://cakturk@smtp.gmail.com:587/"
+#set smtp_pass = "yourpassword" # use the same passowrd as for IMAP
+
+# securing
+##set move = no  #Stop asking to "move read messages to mbox"!
+set imap_keepalive = 900
+set imap_idle = yes
+set sleep_time = 0
+
+# which editor do you want to use?
+# vim of course!
+set editor="vim -c 'set tw=70 et' '+/^$' "
+set edit_headers # See the headers when editing
+set sort=threads

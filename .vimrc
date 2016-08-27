@@ -18,6 +18,10 @@ set number
 set ignorecase
 set smartcase
 set incsearch		" do incremental searching
+" Highlight strings matched by the search pattern
+if &hlsearch == 0
+    set hls
+endif
 set history=1000
 
 " default indent settings

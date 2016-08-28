@@ -72,6 +72,16 @@ if [ "$OS" = "Linux" ] && has_running_de; then
 fi
 
 # Install vim plugins
+VIM_PREREQS="git curl vim"
+for i in $VIM_PREREQS; do
+    if ! which $i > /dev/null 2>&1; then
+        echo "You don't seem to have $i installed on your system."
+        echo "$VIM_PREREQS are required to set up VIM properly."
+        echo "Don't forget to run this script again after you install"
+        echo "prerequisites."
+        exit 1
+    fi
+done
 export GIT_SSL_NO_VERIFY=true
 mkdir -p ~/.vim/autoload
 curl --insecure -fLo ~/.vim/autoload/plug.vim \

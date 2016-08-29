@@ -66,8 +66,9 @@ Plug 'kien/ctrlp.vim', { 'on':  'CtrlP' }
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 
 " Standard plugins
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
-Plug 'bling/vim-airline'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'

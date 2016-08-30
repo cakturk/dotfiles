@@ -62,7 +62,7 @@ Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'kien/ctrlp.vim', { 'on':  'CtrlP' }
+Plug 'ctrlpvim/ctrlp.vim', { 'on':  'CtrlP' }
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 
 " Standard plugins

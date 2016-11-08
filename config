@@ -166,10 +166,13 @@ bar {
         #tray_output primary
 }
 
+# Disable mouse warping
+mouse_warping none
+
 # Make all urxvts, ffoxes use a n-pixel border:
 for_window [class="^URxvt$"] border pixel 1
 for_window [class="^Firefox$"] border pixel 3
-for_window [class="^google-chrome$"] border pixel 4
+for_window [class="^Google-chrome$"] border pixel 4
 
 exec --no-startup-id urxvt256cd -q -o -f
 exec --no-startup-id setxkbmap -option caps:escape
@@ -182,8 +185,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 bindsym $mod+Shift+t exec --no-startup-id i3lock -c 000000 -d -I 5 -i ~/Pictures/curiosity_1.png
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 2 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 2 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
 
 # switch to the next and previous workspace
 bindsym $mod+n workspace next
@@ -200,4 +203,4 @@ bindsym $mod+o workspace back_and_forth
 # start polkit agent helper
 exec --no-startup-id /usr/libexec/polkit-gnome-authentication-agent-1
 
-workspace 1 output LVDS1
+# workspace 1 output LVDS1

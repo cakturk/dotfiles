@@ -1,4 +1,5 @@
 set nocompatible
+set nocscopeverbose
 
 filetype plugin indent on
 syntax on
@@ -69,10 +70,11 @@ Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
-Plug 'cakturk/kernel-coding-style'
+Plug 'vivien/vim-linux-coding-style'
 Plug 'flazz/vim-colorschemes'
 
 call plug#end()
@@ -119,4 +121,20 @@ function! CloseHiddenBuffers()
     endif
   endfor
   echon "Deleted " . l:tally . " buffers"
+endfun
+
+" github.com/allinurl/dotfiles
+map <leader>s :call SuperTabToggle()<CR>
+
+fun! SuperTabToggle()
+    if !exists('b:SuperTabDisabled')
+        let b:SuperTabDisabled = 0
+    endif
+
+    if b:SuperTabDisabled == 0
+        let b:SuperTabDisabled = 1
+    else
+        let b:SuperTabDisabled = 0
+    endif
+    echo "SuperTab: " b:SuperTabDisabled
 endfun

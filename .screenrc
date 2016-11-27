@@ -1,0 +1,7 @@
+caption always '%{= dg} %H %{G}|%=%?%{d}%-w%?%{r}(%{d}%n %t%? {%u} %?%{r})%{d}%?%+w%?%=%{G}| %{B}%M %d %c '
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+defbce "on"
+# Start a new window at the current working directory
+bind x stuff "screen -X chdir \$PWD;screen^M"
+altscreen on

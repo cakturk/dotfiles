@@ -82,6 +82,10 @@ for i in $VIM_PREREQS; do
         exit 1
     fi
 done
+
+# Create .mutt/cache dir otherwise it complains like "couldn't save certificates"
+mkdir -p $HOME/.mutt/cache
+
 export GIT_SSL_NO_VERIFY=true
 mkdir -p ~/.vim/autoload
 curl --insecure -fLo ~/.vim/autoload/plug.vim \

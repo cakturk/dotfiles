@@ -100,7 +100,13 @@ augroup load_us_ultisnips
 augroup END
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_user_command = {
+        \ 'types': {
+            \ 1: ['.git', 'git ls-files -co --exclude-standard %s'],
+            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+        \ },
+        \ 'fallback': 'ag %s -l --nocolor -g ""'
+    \ }
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 

@@ -48,6 +48,11 @@ set completeopt+=longest
 set splitbelow
 set splitright
 
+" put backup and swap files in a fixed directory to keep things more organized
+set undodir=~/.vim/.undo//
+set backupdir=~/.vim/.backup//
+set directory=~/.vim/.swp//
+
 let mapleader   = " "
 let localleader = " "
 

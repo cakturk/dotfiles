@@ -1,0 +1,81 @@
+! Xft.lcdfilter: lcddefault
+! Xft.dpi:        96
+! Xft.hinting:    1
+! Xft.hintstyle:  hintmedium
+! Xft.antialias:  1
+! Xft.rgba:       rgb
+Xcursor*size:   24
+
+! rxvt configuration
+!! Background color
+!URxvt*background: black
+!
+!! Font color
+!URxvt*foreground: white
+!
+!! Other colors
+!URxvt*color0: black
+!URxvt*color1: red3
+!URxvt*color2: green3
+!URxvt*color3: yellow3
+!URxvt*color4: blue2
+!URxvt*color5: magenta3
+!URxvt*color6: cyan3
+!URxvt*color7: gray90
+!URxvt*color8: grey50
+!URxvt*color9: red
+!URxvt*color10: green
+!URxvt*color11: yellow
+!URxvt*color12: blue
+!URxvt*color13: magenta
+!URxvt*color14: cyan
+!URxvt*color15: white
+!
+!! URxvt.letterSpace: 0
+URxvt*font: xft:Terminus:size=11
+URxvt*boldFont: xft:Terminus:bold:size=11
+URxvt*italicFont: xft:Terminus:italic:size=11
+
+!! printf '\e]710;%s\007' "xft:Terminus:pixelsize=12"
+!! echo -e "\e[3mitalic\e[m"
+
+URxvt*background : #000000
+URxvt*foreground : #00FF00
+!URxvt*cursorColor: #1B00FF
+URxvt*colorIT : #00FF00
+URxvt*colorBD : #00FF00
+! black
+URxvt*color0  : #000000
+URxvt*color8  : #555555
+! red
+URxvt*color1  : #AA0000
+URxvt*color9  : #FF5555
+! green
+URxvt*color2  : #00AA00
+URxvt*color10 : #55FF55
+! yellow
+URxvt*color3  : #AA5500
+URxvt*color11 : #FFFF55
+! blue
+! URxvt*color4  : #0000AD
+! URxvt*color12 : #9090FF
+URxvt*color4:  #46aede
+URxvt*color12: #46aede
+! magenta
+URxvt*color5  : #AA00AA
+URxvt*color13 : #FF55FF
+! cyan
+URxvt*color6  : #00AAAA
+URxvt*color14 : #55FFFF
+! white
+URxvt*color7  : #AAAAAA
+URxvt*color15 : #FFFFFF
+
+URxvt*cursorColor: #ff8939
+URxvt*cursorColor2: #151515
+URxvt*termName: rxvt-256color
+URxvt*scrollBar: false
+URxvt*scrollstyle: plain
+URxvt*saveLines: 500
+URxvt*internalBorder: 0
+URxvt*externalBorder: 0

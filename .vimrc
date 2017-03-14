@@ -68,14 +68,16 @@ Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'ctrlpvim/ctrlp.vim', { 'on':  'CtrlP' }
+Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
+Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
+Plug 'tpope/vim-dispatch', { 'on': 'Make' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 
 " Standard plugins
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
@@ -97,6 +99,13 @@ nnoremap <silent> <leader>e :NERDTreeToggle<CR>
 nnoremap <silent> <leader>l :nohlsearch<CR><C-L>
 " Toggle between alternate files
 nnoremap <silent> <leader>t :e #<CR>
+" Run Make using vim-dispatch
+nnoremap <silent> <F7> :Make<CR>
+nnoremap <silent> <F8> :Make check<CR>
+
+" vim-commentary
+map  gc  <Plug>Commentary
+nmap gcc <Plug>CommentaryLine
 
 augroup load_us_ultisnips
 	autocmd!

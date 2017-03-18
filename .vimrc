@@ -13,12 +13,13 @@ set ruler		" show the cursor position all the time
 " set showcmd	" display incomplete commands
 set laststatus=2
 set wildmenu
-
 set number
-
+set relativenumber
+set scrolloff=1
+set autowrite      " Automatically save before commands like :next and :make
 set ignorecase
 set smartcase
-set incsearch		" do incremental searching
+set incsearch
 " Highlight strings matched by the search pattern
 if &hlsearch == 0
     set hls

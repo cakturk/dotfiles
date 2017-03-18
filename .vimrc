@@ -108,6 +108,9 @@ nnoremap <silent> <F8> :Make check<CR>
 map  gc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
 
+command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma
+command! -bar Invert :let &background = (&background=="light"?"dark":"light")
+
 augroup load_us_ultisnips
 	autocmd!
 	autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets')

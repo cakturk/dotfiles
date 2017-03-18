@@ -114,6 +114,12 @@ augroup load_us_ultisnips
                     \| autocmd! load_us_ultisnips
 augroup END
 
+" Automatically scale internal windows on terminal resize
+augroup resize_splits
+	autocmd!
+	autocmd VimResized * tabdo wincmd =
+augroup END
+
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 let g:ctrlp_user_command = {
         \ 'types': {

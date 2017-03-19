@@ -17,6 +17,8 @@ set number
 set relativenumber
 set scrolloff=1
 set autowrite      " Automatically save before commands like :next and :make
+set lazyredraw
+set ttimeoutlen=10
 set ignorecase
 set smartcase
 set incsearch

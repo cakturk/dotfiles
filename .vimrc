@@ -112,6 +112,7 @@ nmap gcc <Plug>CommentaryLine
 
 command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
+command! -nargs=+ -complete=command Tabdo call TabDo(<q-args>)
 
 augroup load_us_ultisnips
 	autocmd!
@@ -122,7 +123,7 @@ augroup END
 " Automatically scale internal windows on terminal resize
 augroup resize_splits
 	autocmd!
-	autocmd VimResized * tabdo wincmd =
+	autocmd VimResized * Tabdo wincmd =
 augroup END
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
@@ -135,6 +136,13 @@ let g:ctrlp_user_command = {
     \ }
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
+
+" Like tabdo but restore the current tab.
+function! TabDo(command)
+    let l:currTab=tabpagenr()
+    execute 'tabdo ' . a:command
+    execute 'tabn ' . currTab
+endfunction
 
 function! CloseHiddenBuffers()
   " figure out which buffers are visible in any tab

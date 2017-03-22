@@ -74,7 +74,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
-Plug 'tpope/vim-dispatch', { 'on': 'Make' }
+Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 
 " Standard plugins
@@ -125,13 +125,21 @@ augroup END
 
 function! s:cpp_maps()
     " Run Make using vim-dispatch
-    nnoremap <buffer> <silent> <F7> :Make<CR>
-    nnoremap <buffer> <silent> <F8> :Make check<CR>
+    nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>
+    nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
 endfunction
 
 augroup cpp_maps
     autocmd!
     autocmd Filetype c,cpp call s:cpp_maps()
+    autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && ./%<<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ % -o %< -Wall && ./%<<CR>
+augroup END
+
+augroup python_maps
+    autocmd!
+    autocmd Filetype python let b:dispatch='python %' |
+                \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
 augroup END
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore

@@ -102,9 +102,6 @@ nnoremap <silent> <leader>e :NERDTreeToggle<CR>
 nnoremap <silent> <leader>l :nohlsearch<CR><C-L>
 " Toggle between alternate files
 nnoremap <silent> <leader>t :e #<CR>
-" Run Make using vim-dispatch
-nnoremap <silent> <F7> :Make<CR>
-nnoremap <silent> <F8> :Make check<CR>
 
 " vim-commentary
 map  gc  <Plug>Commentary
@@ -124,6 +121,17 @@ augroup END
 augroup resize_splits
 	autocmd!
 	autocmd VimResized * Tabdo wincmd =
+augroup END
+
+function! s:cpp_maps()
+    " Run Make using vim-dispatch
+    nnoremap <buffer> <silent> <F7> :Make<CR>
+    nnoremap <buffer> <silent> <F8> :Make check<CR>
+endfunction
+
+augroup cpp_maps
+    autocmd!
+    autocmd Filetype c,cpp call s:cpp_maps()
 augroup END
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore

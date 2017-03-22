@@ -12,6 +12,7 @@ set ruler		" show the cursor position all the time
 " slows down cursor movement on OS X
 " set showcmd	" display incomplete commands
 set laststatus=2
+set pastetoggle=<F9>
 set wildmenu
 set number
 set relativenumber

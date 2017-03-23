@@ -133,8 +133,8 @@ endfunction
 augroup cpp_maps
     autocmd!
     autocmd Filetype c,cpp call s:cpp_maps()
-    autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && ./%<<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ % -o %< -Wall && ./%<<CR>
+    autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ % -o %< -Wall && %:p:r<CR>
 augroup END
 
 augroup python_maps

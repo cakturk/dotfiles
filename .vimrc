@@ -130,15 +130,11 @@ function! s:cpp_maps()
     nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
 endfunction
 
-augroup cpp_maps
+augroup compile_run_maps
     autocmd!
     autocmd Filetype c,cpp call s:cpp_maps()
     autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>
     autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ % -o %< -Wall && %:p:r<CR>
-augroup END
-
-augroup python_maps
-    autocmd!
     autocmd Filetype python let b:dispatch='python %' |
                 \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
 augroup END

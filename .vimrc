@@ -110,7 +110,7 @@ nmap gcc <Plug>CommentaryLine
 
 command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
-command! -nargs=+ -complete=command Tabdo call TabDo(<q-args>)
+command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
 
 augroup load_us_ultisnips
 	autocmd!
@@ -151,7 +151,7 @@ let g:ctrlp_user_command = {
 let g:ctrlp_use_caching = 0
 
 " Like tabdo but restore the current tab.
-function! TabDo(command)
+function! s:tabdo(command)
     let l:currTab=tabpagenr()
     execute 'tabdo ' . a:command
     execute 'tabn ' . currTab

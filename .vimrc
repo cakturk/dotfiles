@@ -121,7 +121,7 @@ augroup END
 " Automatically scale internal windows on terminal resize
 augroup resize_splits
 	autocmd!
-	autocmd VimResized * Tabdo wincmd =
+	autocmd VimResized * silent! Tabdo wincmd =
 augroup END
 
 function! s:cpp_maps()

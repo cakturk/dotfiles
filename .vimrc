@@ -111,6 +111,7 @@ nmap gcc <Plug>CommentaryLine
 command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
 command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
+command! -nargs=* -complete=help Help call <SID>help_split_smart(<f-args>)
 
 augroup load_us_ultisnips
 	autocmd!
@@ -138,6 +139,16 @@ augroup compile_run_maps
     autocmd Filetype python let b:dispatch='python %' |
                 \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
 augroup END
+
+" Open help vertically or horizontally according to current window width
+" based on: http://vi.stackexchange.com/a/4472
+function! s:help_split_smart(tag)
+    if winwidth('%') >= 158
+        execute 'vertical belowright help ' . a:tag
+    else
+        execute 'help ' . a:tag
+    endif
+endfunction
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 let g:ctrlp_user_command = {

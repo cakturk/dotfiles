@@ -41,6 +41,7 @@ set cinoptions=:0,l1,t0,g0,(0
 
 " Display right margin at column 80
 autocmd Filetype c,cpp,python,sh,ruby setlocal colorcolumn=80
+autocmd Filetype go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
 set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options

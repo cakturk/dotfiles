@@ -48,6 +48,7 @@ autocmd Filetype go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options
 set formatoptions+=j " Delete comment character when joining commented lines
+set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 
 " Only insert the longest common text of the matches
 set completeopt+=longest

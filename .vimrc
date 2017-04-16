@@ -113,6 +113,7 @@ command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro nom
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
 command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
 command! -nargs=* -complete=help Help call <SID>help_split_smart(<f-args>)
+command! SudoWrite w !sudo tee % > /dev/null
 
 augroup load_us_ultisnips
 	autocmd!

@@ -14,6 +14,8 @@ set ruler		" show the cursor position all the time
 set laststatus=2
 set pastetoggle=<F9>
 set wildmenu
+set showmatch
+set matchtime=1
 set number
 set relativenumber
 set scrolloff=1

@@ -107,6 +107,9 @@ nnoremap <silent> <leader>e :NERDTreeToggle<CR>
 nnoremap <silent> <leader>l :nohlsearch<CR><C-L>
 " Toggle between alternate files
 nnoremap <silent> <leader>t :e #<CR>
+" Damian Conway's idea. swap semicolon with colon.
+" That <SHIFT> is just plain annoying
+nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 
 " vim-commentary
 map  gc  <Plug>Commentary
@@ -157,6 +160,21 @@ function! s:help_split_smart(tag)
     endif
 endfunction
 
+function! s:swap_semicolon_colon()
+    if maparg(";", "n") == ":"
+        nunmap ;
+    else
+        nnoremap ; :
+    endif
+    if maparg(":", "n") == ";"
+        nunmap :
+    else
+        nnoremap : ;
+    endif
+endfunction
+" Make it default
+call <SID>swap_semicolon_colon()
+
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 let g:ctrlp_user_command = {
         \ 'types': {
@@ -195,9 +213,9 @@ function! CloseHiddenBuffers()
 endfun
 
 " github.com/allinurl/dotfiles
-map <leader>s :call SuperTabToggle()<CR>
+nnoremap <leader>ss :call <SID>supertabtoggle()<CR>
 
-fun! SuperTabToggle()
+fun! s:supertabtoggle()
     if !exists('b:SuperTabDisabled')
         let b:SuperTabDisabled = 0
     endif

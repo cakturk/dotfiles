@@ -110,6 +110,10 @@ nnoremap <silent> <leader>t :e #<CR>
 " Damian Conway's idea. swap semicolon with colon.
 " That <SHIFT> is just plain annoying
 nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
+" <Leader>c Close quickfix/location window
+nnoremap <leader>c :cclose<bar>lclose<CR>
+" Quickly open vim
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 
 " vim-commentary
 map  gc  <Plug>Commentary

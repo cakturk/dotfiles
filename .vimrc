@@ -148,8 +148,8 @@ augroup compile_run_maps
     autocmd Filetype c,cpp call s:cpp_maps()
     autocmd Filetype c nnoremap <buffer> <silent> <leader>4 :Dispatch cc % -o %< -Wall<CR>
     autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>4 :Dispatch c++ % -o %< -Wall<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ % -o %< -Wall && %:p:r<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>4 :Dispatch c++ --std=c++11 % -o %< -Wall<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
     autocmd Filetype python let b:dispatch='python %' |
                 \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
 augroup END

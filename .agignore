@@ -1,0 +1,5 @@
+# ctags
+/tags
+
+# cscope files
+cscope.*

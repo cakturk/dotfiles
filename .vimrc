@@ -17,6 +17,7 @@ set wildmenu
 set showmatch
 set matchtime=1
 set number
+set synmaxcol=300
 set relativenumber
 set scrolloff=1
 set autowrite      " Automatically save before commands like :next and :make

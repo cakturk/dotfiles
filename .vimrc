@@ -76,11 +76,13 @@ Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
-Plug 'davidhalter/jedi-vim', { 'for':  'python' }
+" Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
+" Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Standard plugins
 Plug 'vim-airline/vim-airline'
@@ -100,9 +102,9 @@ silent! colorscheme seoul256
 let NERDTreeRespectWildIgnore=1
 
 " Trigger to load CtrlP
-nnoremap <silent> <c-p> :CtrlP<cr>
+" nnoremap <silent> <c-p> :CtrlP<cr>
 " Toggle NERDTree
-nnoremap <silent> <leader>e :NERDTreeToggle<CR>
+nnoremap <silent> <leader>ee :NERDTreeToggle<CR>
 " Toggle hlsearch
 nnoremap <silent> <leader>l :nohlsearch<CR><C-L>
 " Toggle between alternate files
@@ -114,6 +116,15 @@ nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 nnoremap <leader>c :cclose<bar>lclose<CR>
 " Quickly open vim
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
+nnoremap <silent> <Leader>AG :Ag <C-R><C-A><CR>
+nnoremap <silent> <c-p> :FZF<CR>
+nnoremap <silent> <leader>ff :FZF<CR>
+nnoremap <silent> <leader>fg :GFiles<CR>
+nnoremap <silent> <leader>ft :Tags<CR>
+command! -bang -nargs=* Aw
+  \ call fzf#vim#grep('ag -w --nogroup --column --color '.shellescape(<q-args>), 1, <bang>0)
+nnoremap <silent> <Leader>aw :Aw <C-R><C-W><CR>
 
 " vim-commentary
 map  gc  <Plug>Commentary
@@ -189,6 +200,29 @@ let g:ctrlp_user_command = {
     \ }
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors = {
+            \ 'fg':      ['fg', 'Normal'],
+            \ 'bg':      ['bg', 'Normal'],
+            \ 'hl':      ['fg', 'Comment'],
+            \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+            \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+            \ 'hl+':     ['fg', 'Statement'],
+            \ 'info':    ['fg', 'PreProc'],
+            \ 'prompt':  ['fg', 'Conditional'],
+            \ 'pointer': ['fg', 'Exception'],
+            \ 'marker':  ['fg', 'Keyword'],
+            \ 'spinner': ['fg', 'Label'],
+            \ 'header':  ['fg', 'Comment']
+            \ }
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
 
 " Like tabdo but restore the current tab.
 function! s:tabdo(command)

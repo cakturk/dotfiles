@@ -183,11 +183,12 @@ augroup END
 
 " Open help vertically or horizontally according to current window width
 " based on: http://vi.stackexchange.com/a/4472
-function! s:help_split_smart(tag)
+function! s:help_split_smart(...)
+    let tag = (a:0 == 1) ? a:1 : ''
     if winwidth('%') >= 158
-        execute 'vertical belowright help ' . a:tag
+        execute 'vertical belowright help ' . tag
     else
-        execute 'help ' . a:tag
+        execute 'help ' . tag
     endif
 endfunction
 

@@ -10,6 +10,8 @@ if [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
 
+export GOPATH=$HOME/dev/gocode
+export PATH=$PATH:$GOPATH/bin:/usr/local/sbin
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 export EDITOR=vim

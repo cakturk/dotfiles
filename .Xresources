@@ -4,7 +4,11 @@
 ! Xft.hintstyle:  hintmedium
 ! Xft.antialias:  1
 ! Xft.rgba:       rgb
-Xcursor*size:   24
+Xcursor.size:	24
+Xcursor.theme:	Adwaita
+
+! Urgency hints for URxvt
+URxvt.urgentOnBell: true
 
 ! rxvt configuration
 !! Background color
@@ -40,7 +44,8 @@ URxvt*italicFont: xft:Terminus:italic:size=11
 !! echo -e "\e[3mitalic\e[m"
 
 URxvt*background : #000000
-URxvt*foreground : #00FF00
+URxvt*foreground : #01FF00
+!URxvt*foreground : #00FF00
 !URxvt*cursorColor: #1B00FF
 URxvt*colorIT : #00FF00
 URxvt*colorBD : #00FF00

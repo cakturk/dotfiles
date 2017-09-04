@@ -77,7 +77,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
 
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 " Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 " Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
@@ -107,6 +107,7 @@ let NERDTreeRespectWildIgnore=1
 " nnoremap <silent> <c-p> :CtrlP<cr>
 " Toggle NERDTree
 nnoremap <silent> <leader>ee :NERDTreeToggle<CR>
+nnoremap <silent> <leader>ef :NERDTreeFind<CR>
 " Toggle hlsearch
 nnoremap <silent> <leader>l :nohlsearch<CR><C-L>
 " Toggle between alternate files

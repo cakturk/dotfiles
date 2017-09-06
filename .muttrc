@@ -52,5 +52,6 @@ set sleep_time = 0
 # vim of course!
 set editor="vim -c 'set tw=70 et' '+/^$' "
 set edit_headers # See the headers when editing
+set tilde
 set sort=threads
 set sort_aux=last-date-received

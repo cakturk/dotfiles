@@ -55,3 +55,7 @@ set edit_headers # See the headers when editing
 set tilde
 set sort=threads
 set sort_aux=last-date-received
+set pager_index_lines=6
+
+# Do not download attachments automatically
+unset resolve

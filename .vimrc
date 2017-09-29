@@ -42,6 +42,8 @@ set linebreak
 
 " Indentation options
 set cinoptions=:0,l1,t0,g0,(0
+" Search starts in local include directory, if there is one
+set path^=include
 
 " Display right margin at column 80
 autocmd Filetype c,cpp,python,sh,ruby setlocal colorcolumn=80

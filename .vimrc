@@ -208,7 +208,10 @@ function! s:swap_semicolon_colon()
     endif
 endfunction
 " Make it default
-call <SID>swap_semicolon_colon()
+if !exists("g:loaded_swap_semicolon")
+    call <SID>swap_semicolon_colon()
+    let g:loaded_swap_semicolon = 1
+endif
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 let g:ctrlp_user_command = {

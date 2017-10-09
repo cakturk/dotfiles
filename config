@@ -52,6 +52,9 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+bindsym $mod+bracketleft focus left
+bindsym $mod+bracketright focus right
+
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -171,10 +174,11 @@ mouse_warping none
 
 # Make all urxvts, ffoxes use a n-pixel border:
 for_window [class="^URxvt$"] border pixel 1
-for_window [class="^Firefox$"] border pixel 3
+for_window [class="^Firefox$"] floating enable border pixel 3
 for_window [class="^Google-chrome$"] border pixel 4
 for_window [class="(?i)virtualbox"] floating enable border normal
 
+# exec --no-startup-id xrandr --dpi 220
 exec --no-startup-id urxvt256cd -q -o -f
 # exec --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id setxkbmap -layout us,tr -option grp:alt_shift_toggle

@@ -1,11 +1,11 @@
-export PS1="[\u@\h \W]\\$ "
+PS1="[\u@\h \W]\\$ "
 
 alias ll='ls -lv'
 alias ls='ls -GFh'
 alias grep='grep --color=auto'
 
 # Avoid duplicates
-export HISTCONTROL=ignoredups:erasedups
+export HISTCONTROL=ignoreboth:erasedups
 # big big history
 export HISTSIZE=1500
 export HISTFILESIZE=1500

@@ -154,6 +154,7 @@ command! -bar Invert :let &background = (&background=="light"?"dark":"light")
 command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
 command! -nargs=* -complete=help Help call <SID>help_split_smart(<f-args>)
 command! SudoWrite w !sudo tee % > /dev/null
+command! CloseHiddenBuffers call <SID>closehiddenbuffers()
 
 augroup load_us_ultisnips
 	autocmd!
@@ -254,7 +255,7 @@ function! s:tabdo(command)
     execute 'tabn ' . currTab
 endfunction
 
-function! CloseHiddenBuffers()
+function! s:closehiddenbuffers()
   " figure out which buffers are visible in any tab
   let visible = {}
   for t in range(1, tabpagenr('$'))

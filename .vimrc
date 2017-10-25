@@ -118,7 +118,7 @@ nnoremap <silent> <leader>t :e #<CR>
 " That <SHIFT> is just plain annoying
 nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 " <Leader>c Close quickfix/location window
-nnoremap <leader>c :cclose<bar>lclose<CR>
+nnoremap <silent> <leader>c :cclose<bar>lclose<CR>
 " Quickly open vim
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>

@@ -120,7 +120,7 @@ nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 " <Leader>c Close quickfix/location window
 nnoremap <silent> <leader>c :cclose<bar>lclose<CR>
 " Quickly open vim
-nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader>ev :call <SID>clever_open($MYVIMRC)<CR>
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG :Ag <C-R><C-A><CR>
 nnoremap <silent> <c-p> :FZF<CR>
@@ -186,16 +186,49 @@ augroup compile_run_maps
                 \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
 augroup END
 
+function! s:split_vert()
+    if winwidth('%') >= 158
+        return 1
+    endif
+    return 0
+endfunction
+
 " Open help vertically or horizontally according to current window width
 " based on: http://vi.stackexchange.com/a/4472
 function! s:help_split_smart(...)
     let tag = (a:0 == 1) ? a:1 : ''
-    if winwidth('%') >= 158
-        execute 'vertical belowright help ' . tag
+    if s:split_vert()
+        execute 'noautocmd vertical belowright help ' . tag
     else
-        execute 'help ' . tag
+        execute 'noautocmd help ' . tag
     endif
+    " Work-around for syntax highlighting issues
+    execute 'edit!'
 endfunction
+
+function! s:clever_split()
+    if !s:split_vert()
+        return
+    endif
+    let prev = winwidth('%')
+    for i in range(1, winnr('$'))
+        if prev != winwidth(i)
+            return
+        endif
+    endfor
+    execute 'wincmd L'
+endfunction
+
+function! s:clever_open(f)
+    execute 'belowright split' . a:f
+    call s:clever_split()
+endfunction
+
+" Help in cleverly split windows
+augroup vimrc
+    autocmd!
+    autocmd FileType help call <SID>clever_split()
+augroup END
 
 function! s:swap_semicolon_colon()
     if maparg(";", "n") == ":"

@@ -126,6 +126,7 @@ nnoremap <silent> <Leader>AG :Ag <C-R><C-A><CR>
 nnoremap <silent> <c-p> :FZF<CR>
 nnoremap <silent> <leader>ff :FZF<CR>
 nnoremap <silent> <leader>fg :GFiles<CR>
+nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>ft :Tags<CR>
 command! -bang -nargs=* Aw
   \ call fzf#vim#grep('ag -w --nogroup --column --color '.shellescape(<q-args>), 1, <bang>0)

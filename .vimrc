@@ -119,8 +119,9 @@ nnoremap <silent> <leader>t :e #<CR>
 nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 " <Leader>c Close quickfix/location window
 nnoremap <silent> <leader>c :cclose<bar>lclose<CR>
-" Quickly open vim
+" Quickly open and source vimrc
 nnoremap <leader>ev :call <SID>clever_split('split', $MYVIMRC)<CR>
+nnoremap <leader>es :so $MYVIMRC<CR>
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG :Ag <C-R><C-A><CR>
 nnoremap <silent> <c-p> :FZF<CR>

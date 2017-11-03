@@ -120,7 +120,7 @@ nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 " <Leader>c Close quickfix/location window
 nnoremap <silent> <leader>c :cclose<bar>lclose<CR>
 " Quickly open vim
-nnoremap <leader>ev :call <SID>clever_open($MYVIMRC)<CR>
+nnoremap <leader>ev :call <SID>clever_split('split', $MYVIMRC)<CR>
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG :Ag <C-R><C-A><CR>
 nnoremap <silent> <c-p> :FZF<CR>
@@ -153,7 +153,7 @@ nmap gcc <Plug>CommentaryLine
 command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
 command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
-command! -nargs=* -complete=help Help call <SID>help_split_smart(<f-args>)
+command! -nargs=* -complete=help Help call <SID>clever_split('help', <f-args>)
 command! SudoWrite w !sudo tee % > /dev/null
 command! CloseHiddenBuffers call <SID>closehiddenbuffers()
 
@@ -186,49 +186,37 @@ augroup compile_run_maps
                 \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
 augroup END
 
-function! s:split_vert()
-    if winwidth('%') >= 158
-        return 1
-    endif
-    return 0
+function! s:should_split_vertically()
+    let try_count = 0
+
+    while try_count < 2
+        let try_count += 1
+        if bufname('%') =~# 'NERD_tree_'
+            execute 'wincmd l'
+        endif
+        if &buftype ==# 'quickfix'
+            execute 'wincmd k'
+        endif
+    endwhile
+    return winwidth('%') >= 158
 endfunction
 
 " Open help vertically or horizontally according to current window width
 " based on: http://vi.stackexchange.com/a/4472
-function! s:help_split_smart(...)
-    let tag = (a:0 == 1) ? a:1 : ''
-    if s:split_vert()
-        execute 'noautocmd vertical belowright help ' . tag
+function! s:clever_split(cmd, ...)
+    let l:arg = (a:0 == 1) ? a:1 : ''
+
+    if s:should_split_vertically()
+        let l:acmd = 'vertical belowright ' . a:cmd . ' ' . l:arg
     else
-        execute 'noautocmd help ' . tag
+        let l:acmd = a:cmd . ' ' . l:arg
     endif
-    " Work-around for syntax highlighting issues
-    execute 'edit!'
+    execute l:acmd
 endfunction
 
-function! s:clever_split()
-    if !s:split_vert()
-        return
-    endif
-    let prev = winwidth('%')
-    for i in range(1, winnr('$'))
-        if prev != winwidth(i)
-            return
-        endif
-    endfor
-    execute 'wincmd L'
-endfunction
-
-function! s:clever_open(f)
-    execute 'belowright split' . a:f
-    call s:clever_split()
-endfunction
-
-" Help in cleverly split windows
-augroup vimrc
-    autocmd!
-    autocmd FileType help call <SID>clever_split()
-augroup END
+" Replace built-in :help command with a smarter one
+" http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
+cabbrev h <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Help' : 'h')<CR>
 
 function! s:swap_semicolon_colon()
     if maparg(";", "n") == ":"

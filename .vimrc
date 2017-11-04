@@ -310,5 +310,5 @@ fun! s:supertabtoggle()
     else
         let b:SuperTabDisabled = 0
     endif
-    echo "SuperTab: " b:SuperTabDisabled
+    echo "SuperTab: " . (b:SuperTabDisabled ? 'Off' : 'On')
 endfun

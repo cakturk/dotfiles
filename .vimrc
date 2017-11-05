@@ -170,6 +170,13 @@ augroup resize_splits
 	autocmd VimResized * silent! Tabdo wincmd =
 augroup END
 
+augroup vimrc
+    autocmd!
+    autocmd FileType vim setlocal keywordprg=:Help
+    autocmd FileType help setlocal keywordprg=:help
+    autocmd FileType help nnoremap <silent><buffer> q :q<CR>
+augroup END
+
 function! s:cpp_maps()
     " Run Make using vim-dispatch
     nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>

@@ -121,7 +121,7 @@ nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 nnoremap <silent> <leader>c :cclose<bar>lclose<CR>
 " Quickly open and source vimrc
 nnoremap <leader>ev :call <SID>clever_split('split', $MYVIMRC)<CR>
-nnoremap <leader>es :so $MYVIMRC<CR>
+nnoremap <silent> <leader>es :update $MYVIMRC<Bar>so $MYVIMRC<CR>
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG :Ag <C-R><C-A><CR>
 nnoremap <silent> <c-p> :FZF<CR>

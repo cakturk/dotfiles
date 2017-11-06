@@ -219,7 +219,13 @@ function! s:clever_split(cmd, ...)
     else
         let l:acmd = a:cmd . ' ' . l:arg
     endif
-    execute l:acmd
+    try
+        execute l:acmd
+    catch /^Vim(help):E149:/
+        echohl ErrorMsg
+        echomsg v:exception
+        echohl None
+    endtry
 endfunction
 
 " Replace built-in :help command with a smarter one

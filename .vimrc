@@ -97,9 +97,21 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
 Plug 'vivien/vim-linux-coding-style'
 Plug 'flazz/vim-colorschemes'
+if v:version >= 800
+    Plug 'w0rp/ale', { 'on': [] }
+    augroup ale_loader
+        autocmd!
+        autocmd InsertEnter *
+                    \  if &ft =~# '^\%(c\|cpp\|go\|python\)$'
+                    \|     call plug#load('ale')
+                    \|     execute 'autocmd! ale_loader'
+                    \| endif
+    augroup END
+endif
 
 call plug#end()
 
+let g:solarized_termcolors=256
 silent! colorscheme seoul256
 
 " Tell the NERDTree to respect 'wildignore'
@@ -312,6 +324,14 @@ endfun
 
 " github.com/allinurl/dotfiles
 nnoremap <leader>ss :call <SID>supertabtoggle()<CR>
+" let g:SuperTabDefaultCompletionType = 'context'
+" let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'
+autocmd FileType *
+            \ if &omnifunc != '' |
+            \   call SuperTabChain(&omnifunc, "<c-p>") |
+            \ endif
+let g:SuperTabClosePreviewOnPopupClose = 1
+" let g:SuperTabCompleteCase = 'ignorecase'
 
 fun! s:supertabtoggle()
     if !exists('b:SuperTabDisabled')

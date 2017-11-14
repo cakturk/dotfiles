@@ -2,7 +2,7 @@ set nocompatible
 set nocscopeverbose
 
 filetype plugin indent on
-syntax on
+syntax enable
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start

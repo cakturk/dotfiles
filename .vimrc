@@ -348,22 +348,22 @@ function! s:tabdo(command)
 endfunction
 
 function! s:closehiddenbuffers()
-  " figure out which buffers are visible in any tab
-  let visible = {}
-  for t in range(1, tabpagenr('$'))
-    for b in tabpagebuflist(t)
-      let visible[b] = 1
+    " figure out which buffers are visible in any tab
+    let visible = {}
+    for t in range(1, tabpagenr('$'))
+        for b in tabpagebuflist(t)
+            let visible[b] = 1
+        endfor
     endfor
-  endfor
-  " close any buffer that are loaded and not visible
-  let l:tally = 0
-  for b in range(1, bufnr('$'))
-    if bufname(b) !=# "GoToFile" && buflisted(b) && !has_key(visible, b)
-      let l:tally += 1
-      exe 'bwipeout' . b
-    endif
-  endfor
-  echon "Deleted " . l:tally . " buffers"
+    " close any buffer that are loaded and not visible
+    let l:tally = 0
+    for b in range(1, bufnr('$'))
+        if bufname(b) !=# "GoToFile" && buflisted(b) && !has_key(visible, b)
+            let l:tally += 1
+            exe 'bwipeout' . b
+        endif
+    endfor
+    echon "Deleted " . l:tally . " buffers"
 endfun
 
 fun! s:supertabtoggle()

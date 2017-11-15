@@ -204,6 +204,7 @@ if !exists("g:loaded_swap_semicolon")
 endif
 " }}}
 
+" ======================================================================
 " Commands {{{
 " ======================================================================
 command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma

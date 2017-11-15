@@ -1,12 +1,62 @@
+" ======================================================================
+" Plugins {{{
+" ======================================================================
+call plug#begin('~/.vim/plugged')
+
+" Group dependencies, vim-snippets depends on ultisnips
+Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
+augroup ultisnips_loader
+    autocmd!
+    autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets')
+                \| autocmd! ultisnips_loader
+augroup END
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
+" Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
+" Plug 'davidhalter/jedi-vim', { 'for':  'python' }
+Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
+Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Standard plugins
+Plug 'tpope/vim-fugitive'
+Plug 'simplyzhao/cscope_maps.vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ervandew/supertab'
+Plug 'vivien/vim-linux-coding-style'
+Plug 'flazz/vim-colorschemes'
+if v:version >= 800
+    Plug 'w0rp/ale', { 'on': [] }
+    augroup ale_loader
+        autocmd!
+        autocmd InsertEnter *
+                    \  if &ft =~# '^\%(c\|cpp\|go\|python\)$'
+                    \|     call plug#load('ale')
+                    \|     execute 'autocmd! ale_loader'
+                    \| endif
+    augroup END
+endif
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+call plug#end()
+
+" }}} plugins
+
+" ======================================================================
+" Essential settings {{{
+" ======================================================================
 set nocompatible
-set nocscopeverbose
 
 filetype plugin indent on
 syntax enable
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-
+set nocscopeverbose
 set ruler		" show the cursor position all the time
 
 " slows down cursor movement on OS X
@@ -46,8 +96,11 @@ set cinoptions=:0,l1,t0,g0,(0
 set path^=include
 
 " Display right margin at column 80
-autocmd Filetype c,cpp,python,sh,ruby setlocal colorcolumn=80
-autocmd Filetype go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+augroup indent_group
+    autocmd!
+    autocmd Filetype c,cpp,python,sh,ruby setlocal colorcolumn=80
+    autocmd Filetype go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+augroup end
 
 set wildignore=*.o,*.obj,*~,*.ko
 set sessionoptions-=options
@@ -65,6 +118,14 @@ set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
 
+" Colorscheme settings
+let g:solarized_termcolors=256
+silent! colorscheme seoul256
+" }}}
+
+" ======================================================================
+" Mappings and commands {{{
+" ======================================================================
 let mapleader   = " "
 let localleader = " "
 
@@ -72,47 +133,6 @@ let localleader = " "
 " macro record keybinding from 'q' to 'Q'
 nnoremap Q q
 nnoremap q <Nop>
-
-call plug#begin('~/.vim/plugged')
-
-" Group dependencies, vim-snippets depends on ultisnips
-Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
-
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
-" Plug 'ctrlpvim/ctrlp.vim', {'on': ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
-" Plug 'davidhalter/jedi-vim', { 'for':  'python' }
-Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
-Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-" Standard plugins
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
-Plug 'simplyzhao/cscope_maps.vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'ervandew/supertab'
-Plug 'vivien/vim-linux-coding-style'
-Plug 'flazz/vim-colorschemes'
-if v:version >= 800
-    Plug 'w0rp/ale', { 'on': [] }
-    augroup ale_loader
-        autocmd!
-        autocmd InsertEnter *
-                    \  if &ft =~# '^\%(c\|cpp\|go\|python\)$'
-                    \|     call plug#load('ale')
-                    \|     execute 'autocmd! ale_loader'
-                    \| endif
-    augroup END
-endif
-
-call plug#end()
-
-let g:solarized_termcolors=256
-silent! colorscheme seoul256
 
 " Tell the NERDTree to respect 'wildignore'
 let NERDTreeRespectWildIgnore=1
@@ -141,8 +161,6 @@ nnoremap <silent> <leader>ff :FZF<CR>
 nnoremap <silent> <leader>fg :GFiles<CR>
 nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>ft :Tags<CR>
-command! -bang -nargs=* Aw
-  \ call fzf#vim#grep('ag -w --nogroup --column --color '.shellescape(<q-args>), 1, <bang>0)
 nnoremap <silent> <Leader>aw :Aw <C-R><C-W><CR>
 
 " Quickfix
@@ -163,18 +181,47 @@ nnoremap [t :tabp<cr>
 map  gc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
 
+" supertab: github.com/allinurl/dotfiles
+nnoremap <leader>ss :call <SID>supertabtoggle()<CR>
+
+function! s:swap_semicolon_colon()
+    if maparg(";", "n") == ":"
+        nunmap ;
+    else
+        nnoremap ; :
+    endif
+    if maparg(":", "n") == ";"
+        nunmap :
+    else
+        nnoremap : ;
+    endif
+endfunction
+
+" Make it default
+if !exists("g:loaded_swap_semicolon")
+    call <SID>swap_semicolon_colon()
+    let g:loaded_swap_semicolon = 1
+endif
+" }}}
+
+" Commands {{{
+" ======================================================================
 command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
 command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
 command! -nargs=* -complete=help Help call <SID>clever_split('help', <f-args>)
 command! SudoWrite w !sudo tee % > /dev/null
 command! CloseHiddenBuffers call <SID>closehiddenbuffers()
+command! -bang -nargs=* Aw
+  \ call fzf#vim#grep('ag -w --nogroup --column --color '.shellescape(<q-args>), 1, <bang>0)
 
-augroup load_us_ultisnips
-	autocmd!
-	autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets')
-                    \| autocmd! load_us_ultisnips
-augroup END
+" Replace built-in :help command with a smarter one
+" http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
+cabbrev h <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Help' : 'h')<CR>
+" }}}
+
+" Autocommands
+" ------------
 
 " Automatically scale internal windows on terminal resize
 augroup resize_splits
@@ -189,12 +236,6 @@ augroup vimrc
     autocmd FileType help nnoremap <silent><buffer> q :q<CR>
 augroup END
 
-function! s:cpp_maps()
-    " Run Make using vim-dispatch
-    nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>
-    nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
-endfunction
-
 augroup compile_run_maps
     autocmd!
     autocmd Filetype c,cpp call s:cpp_maps()
@@ -206,61 +247,18 @@ augroup compile_run_maps
                 \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
 augroup END
 
-function! s:should_split_vertically()
-    let try_count = 0
+" ======================================================================
+" Plugin configurations {{{
+" ======================================================================
 
-    while try_count < 2
-        let try_count += 1
-        if bufname('%') =~# 'NERD_tree_'
-            execute 'wincmd l'
-        endif
-        if &buftype ==# 'quickfix'
-            execute 'wincmd k'
-        endif
-    endwhile
-    return winwidth('%') >= 158
-endfunction
-
-" Open help vertically or horizontally according to current window width
-" based on: http://vi.stackexchange.com/a/4472
-function! s:clever_split(cmd, ...)
-    let l:arg = (a:0 == 1) ? a:1 : ''
-
-    if s:should_split_vertically()
-        let l:acmd = 'vertical belowright ' . a:cmd . ' ' . l:arg
-    else
-        let l:acmd = a:cmd . ' ' . l:arg
-    endif
-    try
-        execute l:acmd
-    catch /^Vim(help):E149:/
-        echohl ErrorMsg
-        echomsg v:exception
-        echohl None
-    endtry
-endfunction
-
-" Replace built-in :help command with a smarter one
-" http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
-cabbrev h <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Help' : 'h')<CR>
-
-function! s:swap_semicolon_colon()
-    if maparg(";", "n") == ":"
-        nunmap ;
-    else
-        nnoremap ; :
-    endif
-    if maparg(":", "n") == ";"
-        nunmap :
-    else
-        nnoremap : ;
-    endif
-endfunction
-" Make it default
-if !exists("g:loaded_swap_semicolon")
-    call <SID>swap_semicolon_colon()
-    let g:loaded_swap_semicolon = 1
-endif
+" let g:SuperTabDefaultCompletionType = 'context'
+" let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'
+autocmd FileType *
+            \ if &omnifunc != '' |
+            \   call SuperTabChain(&omnifunc, "<c-p>") |
+            \ endif
+let g:SuperTabClosePreviewOnPopupClose = 1
+" let g:SuperTabCompleteCase = 'ignorecase'
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 let g:ctrlp_user_command = {
@@ -296,6 +294,52 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 
+" }}}
+
+" ======================================================================
+" Helper functions {{{
+" ======================================================================
+
+function! s:cpp_maps()
+    " Run Make using vim-dispatch
+    nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>
+    nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
+endfunction
+
+function! s:should_split_vertically()
+    let try_count = 0
+
+    while try_count < 2
+        let try_count += 1
+        if bufname('%') =~# 'NERD_tree_'
+            execute 'wincmd l'
+        endif
+        if &buftype ==# 'quickfix'
+            execute 'wincmd k'
+        endif
+    endwhile
+    return winwidth('%') >= 158
+endfunction
+
+" Open help vertically or horizontally according to current window width
+" based on: http://vi.stackexchange.com/a/4472
+function! s:clever_split(cmd, ...)
+    let l:arg = (a:0 == 1) ? a:1 : ''
+
+    if s:should_split_vertically()
+        let l:acmd = 'vertical belowright ' . a:cmd . ' ' . l:arg
+    else
+        let l:acmd = a:cmd . ' ' . l:arg
+    endif
+    try
+        execute l:acmd
+    catch /^Vim(help):E149:/
+        echohl ErrorMsg
+        echomsg v:exception
+        echohl None
+    endtry
+endfunction
+
 " Like tabdo but restore the current tab.
 function! s:tabdo(command)
     let l:currTab=tabpagenr()
@@ -322,17 +366,6 @@ function! s:closehiddenbuffers()
   echon "Deleted " . l:tally . " buffers"
 endfun
 
-" github.com/allinurl/dotfiles
-nnoremap <leader>ss :call <SID>supertabtoggle()<CR>
-" let g:SuperTabDefaultCompletionType = 'context'
-" let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'
-autocmd FileType *
-            \ if &omnifunc != '' |
-            \   call SuperTabChain(&omnifunc, "<c-p>") |
-            \ endif
-let g:SuperTabClosePreviewOnPopupClose = 1
-" let g:SuperTabCompleteCase = 'ignorecase'
-
 fun! s:supertabtoggle()
     if !exists('b:SuperTabDisabled')
         let b:SuperTabDisabled = 0
@@ -345,3 +378,4 @@ fun! s:supertabtoggle()
     endif
     echo "SuperTab: " . (b:SuperTabDisabled ? 'Off' : 'On')
 endfun
+" }}}

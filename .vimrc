@@ -47,7 +47,7 @@ call plug#end()
 " }}} plugins
 
 " ======================================================================
-" Essential settings {{{
+" General settings {{{
 " ======================================================================
 set nocompatible
 
@@ -95,7 +95,7 @@ set cinoptions=:0,l1,t0,g0,(0
 " Search starts in local include directory, if there is one
 set path^=include
 
-" Display right margin at column 80
+" Display right margin at 80th column
 augroup indent_group
     autocmd!
     autocmd Filetype c,cpp,python,sh,ruby setlocal colorcolumn=80
@@ -117,6 +117,19 @@ set splitright
 set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
+
+augroup vimrc
+    autocmd!
+    autocmd FileType vim setlocal keywordprg=:Help
+    autocmd FileType help setlocal keywordprg=:help
+    autocmd FileType help nnoremap <silent><buffer> q :q<CR>
+augroup END
+
+" Automatically scale internal windows on terminal resize
+augroup resize_splits
+    autocmd!
+    autocmd VimResized * silent! Tabdo wincmd =
+augroup END
 
 " Colorscheme settings
 let g:solarized_termcolors=256
@@ -177,6 +190,17 @@ nnoremap [b :bprev<cr>
 nnoremap ]t :tabn<cr>
 nnoremap [t :tabp<cr>
 
+augroup compile_run_maps
+    autocmd!
+    autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>
+    autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
+    autocmd Filetype c nnoremap <buffer> <silent> <leader>4 :Dispatch cc % -o %< -Wall<CR>
+    autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>4 :Dispatch c++ --std=c++11 % -o %< -Wall<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5: Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
+    autocmd Filetype python let b:dispatch='python %' | nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
+augroup END
+
 " vim-commentary
 map  gc  <Plug>Commentary
 nmap gcc <Plug>CommentaryLine
@@ -220,33 +244,6 @@ command! -bang -nargs=* Aw
 " http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev h <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Help' : 'h')<CR>
 " }}}
-
-" Autocommands
-" ------------
-
-" Automatically scale internal windows on terminal resize
-augroup resize_splits
-	autocmd!
-	autocmd VimResized * silent! Tabdo wincmd =
-augroup END
-
-augroup vimrc
-    autocmd!
-    autocmd FileType vim setlocal keywordprg=:Help
-    autocmd FileType help setlocal keywordprg=:help
-    autocmd FileType help nnoremap <silent><buffer> q :q<CR>
-augroup END
-
-augroup compile_run_maps
-    autocmd!
-    autocmd Filetype c,cpp call s:cpp_maps()
-    autocmd Filetype c nnoremap <buffer> <silent> <leader>4 :Dispatch cc % -o %< -Wall<CR>
-    autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>4 :Dispatch c++ --std=c++11 % -o %< -Wall<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
-    autocmd Filetype python let b:dispatch='python %' |
-                \ nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
-augroup END
 
 " ======================================================================
 " Plugin configurations {{{
@@ -300,12 +297,6 @@ let g:fzf_buffers_jump = 1
 " ======================================================================
 " Helper functions {{{
 " ======================================================================
-
-function! s:cpp_maps()
-    " Run Make using vim-dispatch
-    nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>
-    nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
-endfunction
 
 function! s:should_split_vertically()
     let try_count = 0

@@ -35,10 +35,12 @@ if v:version >= 800
         autocmd InsertEnter *
                     \  if &ft =~# '^\%(c\|cpp\|go\|python\)$'
                     \|     call plug#load('ale')
+                    \|     let g:ale_sign_column_always = 1
                     \|     execute 'autocmd! ale_loader'
                     \| endif
     augroup END
 endif
+Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -52,15 +54,16 @@ call plug#end()
 set nocompatible
 
 filetype plugin indent on
-syntax enable
+syntax on
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 set nocscopeverbose
 set ruler		" show the cursor position all the time
+set visualbell
 
 " slows down cursor movement on OS X
-" set showcmd	" display incomplete commands
+set showcmd	" display incomplete commands
 set laststatus=2
 set pastetoggle=<F9>
 set wildmenu
@@ -73,7 +76,7 @@ set relativenumber
 set scrolloff=1
 set autowrite      " Automatically save before commands like :next and :make
 set lazyredraw
-set ttimeoutlen=10
+set timeout timeoutlen=600 ttimeoutlen=10
 set ignorecase
 set smartcase
 set incsearch
@@ -123,7 +126,7 @@ augroup vimrc
     autocmd!
     autocmd FileType vim setlocal keywordprg=:Help
     autocmd FileType help setlocal keywordprg=:help
-    autocmd FileType help nnoremap <silent><buffer> q :q<CR>
+    autocmd FileType help,vim nnoremap <silent><buffer> q :q<CR>
 augroup END
 
 " Automatically scale internal windows on terminal resize
@@ -148,15 +151,12 @@ let localleader = " "
 nnoremap Q q
 nnoremap q <Nop>
 
-" Tell the NERDTree to respect 'wildignore'
-let NERDTreeRespectWildIgnore=1
-
 " Trigger to load CtrlP
 " nnoremap <silent> <c-p> :CtrlP<cr>
 " Toggle NERDTree
 nnoremap <silent> <leader>ee :NERDTreeToggle<CR>
 nnoremap <silent> <leader>ef :NERDTreeFind<CR>
-" Toggle hlsearch
+" Turn off search highlighting - :nohlsearch<CR><C-L>
 nnoremap <silent> <leader>l :nohlsearch<CR><C-L>
 " Toggle between alternate files
 nnoremap <silent> <leader>t :e #<CR>
@@ -166,7 +166,8 @@ nnoremap <silent> <leader>st :call <SID>swap_semicolon_colon()<CR>
 " <Leader>c Close quickfix/location window
 nnoremap <silent> <leader>c :cclose<bar>lclose<CR>
 " Quickly open and source vimrc
-nnoremap <leader>ev :call <SID>clever_split('split', $MYVIMRC)<CR>
+nnoremap <silent> <leader>et :call <SID>clever_split('split', '~/.tmux.conf')<CR>
+nnoremap <silent> <leader>ev :call <SID>clever_split('split', $MYVIMRC)<CR>
 nnoremap <silent> <leader>es :update $MYVIMRC<Bar>so $MYVIMRC<CR>
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG :Ag <C-R><C-A><CR>
@@ -198,8 +199,9 @@ augroup compile_run_maps
     autocmd Filetype c nnoremap <buffer> <silent> <leader>4 :Dispatch cc % -o %< -Wall<CR>
     autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>
     autocmd Filetype cpp nnoremap <buffer> <silent> <leader>4 :Dispatch c++ --std=c++11 % -o %< -Wall<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5: Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
     autocmd Filetype python let b:dispatch='python %' | nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
+    autocmd Filetype go nnoremap <buffer> <silent> <leader>r :GoRun %<CR>
 augroup END
 
 " vim-commentary
@@ -241,6 +243,13 @@ command! CloseHiddenBuffers call <SID>closehiddenbuffers()
 command! -bang -nargs=* Aw
   \ call fzf#vim#grep('ag -w --nogroup --column --color '.shellescape(<q-args>), 1, <bang>0)
 
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+" Revert with: ":delcommand DiffOrig". Copied from 'defaults.vim'
+command! DiffOrig let dsyn=&syn | vert new | set bt=nofile | let &syn=dsyn | r ++edit # | 0d_
+            \ | difft | nnoremap <silent><buffer> q :q<CR> | winc p | difft
+
 " Replace built-in :help command with a smarter one
 " http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev h <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Help' : 'h')<CR>
@@ -249,6 +258,9 @@ cabbrev h <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Help' : 'h')<CR>
 " ======================================================================
 " Plugin configurations {{{
 " ======================================================================
+
+" Tell the NERDTree to respect 'wildignore'
+let NERDTreeRespectWildIgnore=1
 
 " let g:SuperTabDefaultCompletionType = 'context'
 " let g:SuperTabContextDefaultCompletionType = '<c-x><c-o>'

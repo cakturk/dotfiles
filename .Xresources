@@ -78,7 +78,7 @@ URxvt*color15 : #FFFFFF
 
 URxvt*cursorColor: #ff8939
 URxvt*cursorColor2: #151515
-URxvt*termName: rxvt-256color
+! URxvt*termName: rxvt-256color
 URxvt*scrollBar: false
 URxvt*scrollstyle: plain
 URxvt*saveLines: 500

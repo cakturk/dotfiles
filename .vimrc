@@ -207,6 +207,13 @@ nnoremap [b :bprev<cr>
 nnoremap ]t :tabn<cr>
 nnoremap [t :tabp<cr>
 
+" jf/jk | Escaping!
+inoremap jf <Esc>
+inoremap jk <Esc>
+inoremap jj <Esc>
+" xnoremap jf <Esc>
+" cnoremap jf <C-c>
+
 augroup compile_run_maps
     autocmd!
     autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>

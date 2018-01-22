@@ -178,6 +178,21 @@ nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>ft :Tags<CR>
 nnoremap <silent> <Leader>aw :Aw <C-R><C-W><CR>
 
+" Editor mappings
+nnoremap <leader>w :update<CR>
+nnoremap <leader>e :e!<CR>
+nnoremap <leader>x :e!<CR>
+
+" If cursor is in first or last line of window, scroll to middle line.
+function! s:maybemiddle()
+    if winline() == &so+1 || winline() == winheight(0) - &so
+        normal! zz
+    endif
+endfunction
+
+nnoremap <silent> n n:call <SID>maybemiddle()<CR>
+nnoremap <silent> N N:call <SID>maybemiddle()<CR>
+
 " Quickfix
 nnoremap ]q :cnext<cr>zz
 nnoremap [q :cprev<cr>zz

@@ -187,6 +187,9 @@ exec --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
 exec --no-startup-id xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
 exec --no-startup-id xsetroot -solid "#333333"
 exec --no-startup-id nm-applet
+exec --no-startup-id unclutter -idle 3
+exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Tapping Enabled' 1
+exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Natural Scrolling Enabled' 1
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
@@ -195,8 +198,10 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 bindsym $mod+Shift+t exec --no-startup-id i3lock -f -e -c 000000 -d -I 5 -i ~/Pictures/curiosity_1.png
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+# bindsym XF86MonBrightnessUp exec xbacklight -inc 5 # increase screen brightness
+# bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec light -A 2
+bindsym XF86MonBrightnessDown exec light -U 2
 
 # switch to the next and previous workspace
 bindsym $mod+n workspace next

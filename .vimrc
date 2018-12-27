@@ -77,6 +77,7 @@ set synmaxcol=300
 set switchbuf=useopen,usetab
 " set relativenumber
 set scrolloff=1
+set encoding=utf-8
 set autowrite      " Automatically save before commands like :next and :make
 set lazyredraw
 set timeout timeoutlen=600 ttimeoutlen=10

@@ -18,6 +18,8 @@ Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle', 'TagbarDebug'] }
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
@@ -61,6 +63,7 @@ set backspace=indent,eol,start
 set nocscopeverbose
 set ruler		" show the cursor position all the time
 set visualbell
+set mouse=ni
 
 " slows down cursor movement on OS X
 set showcmd	" display incomplete commands
@@ -72,7 +75,7 @@ set matchtime=1
 set number
 set synmaxcol=300
 set switchbuf=useopen,usetab
-set relativenumber
+" set relativenumber
 set scrolloff=1
 set autowrite      " Automatically save before commands like :next and :make
 set lazyredraw
@@ -178,12 +181,16 @@ nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>ft :Tags<CR>
 nnoremap <silent> <Leader>aw :Aw <C-R><C-W><CR>
 
+"Double-delete to remove trailing whitespace...
+nnoremap <silent> <BS><BS> :call <SID>trimtrailingws()<CR>
+
 " Editor mappings
 nnoremap <leader>w :update<CR>
 nnoremap <leader>e :e!<CR>
 nnoremap <leader>x :e!<CR>
 
 " If cursor is in first or last line of window, scroll to middle line.
+" VimWiki: Make_search_results_appear_in_the_middle_of_the_screen
 function! s:maybemiddle()
     if winline() == &so+1 || winline() == winheight(0) - &so
         normal! zz
@@ -233,6 +240,12 @@ nmap gcc <Plug>CommentaryLine
 " supertab: github.com/allinurl/dotfiles
 nnoremap <leader>ss :call <SID>supertabtoggle()<CR>
 
+" Tagbar
+nnoremap <silent> <F8> :TagbarToggle<CR>
+
+let g:goyo_width=100
+nnoremap <silent> <F9> :Goyo<CR>
+
 function! s:swap_semicolon_colon()
     if maparg(";", "n") == ":"
         nunmap ;
@@ -256,7 +269,7 @@ endif
 " ======================================================================
 " Commands {{{
 " ======================================================================
-command! -bar -count=0 RFC :e http://www.ietf.org/rfc/rfc<count>.txt|setl ro noma
+command! -bar -count=0 RFC :e https://tools.ietf.org/rfc/rfc<count>.txt|setl ro noma
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
 command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
 command! -nargs=* -complete=help Help call <SID>clever_split('help', <f-args>)
@@ -326,6 +339,10 @@ let g:fzf_colors = {
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
+
+" vim-go
+let g:go_fmt_command = "goimports"
+let g:go_fmt_fail_silently = 1
 
 " }}}
 
@@ -405,4 +422,11 @@ fun! s:supertabtoggle()
     endif
     echo "SuperTab: " . (b:SuperTabDisabled ? 'Off' : 'On')
 endfun
+
+" Damian Conway's Vim setup
+function! s:trimtrailingws()
+    if search('\s\+$', 'cnw')
+        :%s/\s\+$//g
+    endif
+endfunction
 " }}}

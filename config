@@ -187,7 +187,7 @@ exec --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
 exec --no-startup-id xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
 exec --no-startup-id xsetroot -solid "#333333"
 exec --no-startup-id nm-applet
-exec --no-startup-id unclutter -idle 3
+exec --no-startup-id unclutter --timeout 3
 exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Tapping Enabled' 1
 exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Natural Scrolling Enabled' 1
 

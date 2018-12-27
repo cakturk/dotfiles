@@ -1,10 +1,10 @@
-! Xft.lcdfilter: lcddefault
-! Xft.dpi:        96
-! Xft.hinting:    1
-! Xft.hintstyle:  hintmedium
-! Xft.antialias:  1
-! Xft.rgba:       rgb
-Xcursor.size:	24
+Xft.lcdfilter: lcddefault
+/* Xft.dpi:        220 */
+Xft.hinting:    1
+Xft.hintstyle:  hintslight
+Xft.antialias:  1
+Xft.rgba:       rgb
+! Xcursor.size:	24
 Xcursor.theme:	Adwaita
 
 ! Urgency hints for URxvt
@@ -36,9 +36,9 @@ URxvt.urgentOnBell: true
 !URxvt*color15: white
 !
 !! URxvt.letterSpace: 0
-URxvt*font: xft:xos4 Terminus:size=11
-URxvt*boldFont: xft:xos4 Terminus:bold:size=11
-URxvt*italicFont: xft:xos4 Terminus:italic:size=11
+URxvt*font: xft:Terminus:size=11
+URxvt*boldFont: xft:Terminus:bold:size=11
+URxvt*italicFont: xft:Terminus:italic:size=11
 
 !! printf '\e]710;%s\007' "xft:Terminus:pixelsize=12"
 !! echo -e "\e[3mitalic\e[m"

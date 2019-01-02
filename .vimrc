@@ -345,6 +345,9 @@ let g:fzf_buffers_jump = 1
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
 
+" Disable tmux navigator when zooming the Vim pane
+let g:tmux_navigator_disable_when_zoomed = 1
+
 " }}}
 
 " ======================================================================

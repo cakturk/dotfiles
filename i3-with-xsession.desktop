@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=i3 (xsession)
+Comment=improved dynamic tiling window manager
+Exec=custom
+Type=Application
+X-LightDM-DesktopName=i3
+DesktopNames=i3
+Keywords=tiling;wm;windowmanager;window;manager;

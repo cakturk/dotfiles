@@ -38,9 +38,19 @@ xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
 # key repeat threshold and rate
 xset r rate 300 58
 
+# Prefix launch of session with ssh-agent if available and not already running.
+if [ -z "$SSH_AGENT" ] && [ -z "$SSH_AUTH_SOCK" ] && [ -z "$SSH_AGENT_PID" ] \
+    && [ -x /usr/bin/ssh-agent ]; then
+	if [ "x$TMPDIR" != "x" ]; then
+		SSH_AGENT="/usr/bin/ssh-agent /bin/env TMPDIR=$TMPDIR"
+	else
+		SSH_AGENT="/usr/bin/ssh-agent"
+	fi
+fi
+
 # uncomment this if not using a login manager
 # so i3 will start correctly
-exec /usr/bin/i3
+exec -l $SHELL -c "$CK_XINIT_SESSION $SSH_AGENT /usr/bin/i3"
 
 # be verbose
 # exec /usr/bin/i3 -V >> ~/.config/i3/logfile 2>&1

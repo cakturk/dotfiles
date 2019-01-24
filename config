@@ -178,6 +178,7 @@ for_window [class="^Firefox$"] floating enable border pixel 3
 for_window [class="^Google-chrome$"] border pixel 4
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="(?i)Tor Browser"] floating enable
+for_window [class="(?i)nm-connection-editor"] floating enable
 
 # exec --no-startup-id xrandr --dpi 220
 exec --no-startup-id urxvt256cd -q -o -f

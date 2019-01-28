@@ -179,6 +179,7 @@ for_window [class="^Google-chrome$"] border pixel 4
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="(?i)Tor Browser"] floating enable
 for_window [class="(?i)nm-connection-editor"] floating enable
+for_window [class="(?i)pavucontrol"] floating enable
 
 # exec --no-startup-id xrandr --dpi 220
 exec --no-startup-id urxvt256cd -q -o -f
@@ -189,6 +190,7 @@ exec --no-startup-id urxvt256cd -q -o -f
 # exec --no-startup-id xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
 exec --no-startup-id xsetroot -solid "#333333"
 exec --no-startup-id nm-applet
+exec --no-startup-id volumeicon
 exec --no-startup-id unclutter --timeout 3
 exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Tapping Enabled' 1
 exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Natural Scrolling Enabled' 1

@@ -12,7 +12,6 @@ URxvt.urgentOnBell: true
 
 ! Location of custom Perl extensions
 ! see valloric/dotfiles
-URxvt*perl-lib: /home/cakturk/.dotfiles
 URxvt*perl-ext-common: keyboard-select
 URxvt*keysym.M-Escape: perl:keyboard-select:activate
 URxvt*keyboard-select.clipboard: 1

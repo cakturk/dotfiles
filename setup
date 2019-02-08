@@ -6,8 +6,9 @@ set -e
 # This method doesn't seem to work in FreeBSD's Bourne shell-compatible (sh)
 # http://stackoverflow.com/a/246128/6740471
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-COMMON_FILES=".vimrc .tmux.conf .screenrc .muttrc .gitconfig .agignore"
-MAC_FILES=".inputrc .bashrc .bash_profile"
+COMMON_FILES=".vimrc .tmux.conf .screenrc .muttrc .gitconfig .agignore .inputrc"
+X11_FILES=".Xresources .xinitrc .xsession .urxvt"
+MAC_FILES=".bashrc .bash_profile"
 OS=$(uname 2> /dev/null)
 BACKUPDIR=$(mktemp -d "$HOME/dotfiles.bak.XXXXXX")
 
@@ -17,11 +18,10 @@ BACKUPDIR=$(mktemp -d "$HOME/dotfiles.bak.XXXXXX")
 # will work for bare window managers without a display manager.
 # http://unix.stackexchange.com/a/116694
 has_running_de() {
-    if [ "$XDG_CURRENT_DESKTOP" = "" ]
-    then
+    if [ "$XDG_CURRENT_DESKTOP" = "" ]; then
         desktop=$(echo "$XDG_DATA_DIRS" | sed 's/.*\(xfce\|kde\|gnome\).*/\1/')
-    else
-        desktop=$XDG_CURRENT_DESKTOP
+    elif [ -n "XDG_VTNR" ]; then
+        desktop="yes"
     fi
 
     desktop=${desktop,,}  # convert to lower case
@@ -32,7 +32,18 @@ has_running_de() {
 }
 
 backupfile() {
-    cp -f $1 $BACKUPDIR
+    local target=$1
+    # Remove target if it is a symlink, otherwise copy
+    # it to the dotfiles.bak.XXX dir
+    if [ -L "$target" ]; then
+        rm -f $target
+    else
+        if [ -f "$target" ]; then
+            cp -f $1 $BACKUPDIR
+        elif [ -d "$target" ]; then
+            mv -f $1 $BACKUPDIR
+        fi
+    fi
 }
 
 cleanup() {
@@ -43,33 +54,24 @@ cleanup() {
 }
 trap cleanup EXIT
 
+# Setup i3 configuration files for Linux
+if [ "$OS" != "Darwin" ] && has_running_de; then
+    i3confdir="$HOME/.config/i3"
+    i3conf="$i3confdir/config"
+    backupfile "$i3conf"
+    mkdir -p "$i3confdir"
+    ln -sf "$DIR/config" "$i3conf"
+
+    COMMON_FILES="$COMMON_FILES $X11_FILES"
+fi
+
 # Create symlinks to common rc files
 for f in $COMMON_FILES; do
     target="$HOME/${f##*/}"
-
-    # Remove target if it is a symlink, otherwise copy
-    # it to the dotfiles.bak.XXX dir
-    if [ -L "$target" ]; then
-        rm -f $target
-    else
-        if [ -f "$target" ]; then
-            backupfile $target
-        fi
-    fi
+    backupfile "$target"
 
     ln -sf "$DIR/$f" ~/
 done
-
-# Setup i3 configuration files for Linux
-if [ "$OS" = "Linux" ] && has_running_de; then
-    i3confdir="$HOME/.config/i3"
-    i3conf="$i3confdir/config"
-    if [ ! -L "$i3conf" ] && [ -f "$i3conf" ]; then
-        backupfile "$i3conf"
-    fi
-    mkdir -p "$i3confdir"
-    ln -sf "$DIR/config" "$i3conf"
-fi
 
 # Install vim plugins
 VIM_PREREQS="git curl vim"

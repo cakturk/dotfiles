@@ -46,6 +46,15 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+if has('nvim')
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'bash install.sh',
+                \ }
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    let g:deoplete#enable_at_startup = 1
+endif
+
 call plug#end()
 
 " }}} plugins
@@ -138,6 +147,10 @@ augroup resize_splits
     autocmd!
     autocmd VimResized * silent! Tabdo wincmd =
 augroup END
+
+if has('nvim')
+    set inccommand=nosplit
+endif
 
 " Colorscheme settings
 let g:solarized_termcolors=256

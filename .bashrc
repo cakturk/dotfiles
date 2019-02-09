@@ -1,10 +1,15 @@
 PS1="[\u@\h \W]\\$ "
 
+# Enable bash completion
+if [ -f /usr/local/etc/bash_completion ]; then
+	. /usr/local/etc/bash_completion
+fi
+
 # Avoid duplicates
 HISTCONTROL=ignoreboth:erasedups
 # big big history
-HISTSIZE=1500
-HISTFILESIZE=1500
+HISTSIZE=50000
+HISTFILESIZE=50000
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 

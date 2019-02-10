@@ -6,7 +6,8 @@ set -e
 # This method doesn't seem to work in FreeBSD's Bourne shell-compatible (sh)
 # http://stackoverflow.com/a/246128/6740471
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-COMMON_FILES=".vimrc .tmux.conf .screenrc .muttrc .gitconfig .agignore .inputrc"
+COMMON_FILES=".vimrc .tmux.conf .screenrc .muttrc .gitconfig .agignore \
+    .inputrc .zshrc"
 X11_FILES=".Xresources .xinitrc .xsession .urxvt"
 MAC_FILES=".bashrc .bash_profile"
 OS=$(uname 2> /dev/null)

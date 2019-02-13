@@ -51,6 +51,48 @@ if has('nvim')
                 \ 'branch': 'next',
                 \ 'do': 'bash install.sh',
                 \ }
+
+    let g:LanguageClient_serverCommands = {
+                \ 'c': ['cquery',
+                \ '--log-file=/tmp/cq.log',
+                \ '--init={"cacheDirectory":"/tmp/cquery/"}'],
+                \ 'cpp': ['cquery',
+                \ '--log-file=/tmp/cq.log',
+                \ '--init={"cacheDirectory":"/tmp/cquery/"}']
+                \ }
+
+    let g:LanguageClient_diagnosticsDisplay =  {
+                \ 1: {
+                \    "name": "Error",
+                \    "texthl": "ALEError",
+                \    "signText": "✖",
+                \    "signTexthl": "ALEErrorSign",
+                \    "virtualTexthl": "Error",
+                \ },
+                \ 2: {
+                \    "name": "Warning",
+                \    "texthl": "ALEWarning",
+                \    "signText": "⚠",
+                \    "signTexthl": "ALEWarningSign",
+                \    "virtualTexthl": "Todo",
+                \ },
+                \ 3: {
+                \    "name": "Information",
+                \    "texthl": "ALEInfo",
+                \    "signText": "ℹ",
+                \    "signTexthl": "ALEInfoSign",
+                \    "virtualTexthl": "Todo",
+                \ },
+                \ 4: {
+                \    "name": "Hint",
+                \    "texthl": "ALEInfo",
+                \    "signText": "➤",
+                \    "signTexthl": "ALEInfoSign",
+                \    "virtualTexthl": "Todo",
+                \ },
+                \ }
+
+
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#enable_at_startup = 1
 endif

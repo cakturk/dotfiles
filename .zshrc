@@ -103,6 +103,10 @@ source $ZSH/oh-my-zsh.sh
 # unset LESS, because it causes 'git-log' to always pipe through less
 unset LESS
 
+# bring back emacs keybindings
+bindkey "^U" backward-kill-line
+bindkey "^K" kill-line
+
 # fv - FZF + fasd to edit recent vim files faster.
 # Don't change this fv() to v(), or all hell may break loose.
 fv() {

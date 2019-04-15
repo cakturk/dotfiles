@@ -107,6 +107,9 @@ unset LESS
 # bring back emacs keybindings
 bindkey "^U" backward-kill-line
 bindkey "^K" kill-line
+# smarter history searching with C-P, C-N
+bindkey "^P" up-line-or-beginning-search
+bindkey "^N" down-line-or-beginning-search
 
 # fv - FZF + fasd to edit recent vim files faster.
 # Don't change this fv() to v(), or all hell may break loose.

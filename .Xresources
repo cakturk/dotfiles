@@ -1,10 +1,11 @@
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.autohint: false
+Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
-/* Xft.dpi:        220 */
-Xft.hinting:    1
-Xft.hintstyle:  hintslight
-Xft.antialias:  1
-Xft.rgba:       rgb
-! Xcursor.size:	24
+/* Xft.dpi: 96 */
+/* Xcursor.size:	24 */
 Xcursor.theme:	Adwaita
 
 ! Urgency hints for URxvt
@@ -42,9 +43,15 @@ URxvt*keyboard-select.clipboard: 1
 !URxvt*color15: white
 !
 !! URxvt.letterSpace: 0
-URxvt*font: xft:Terminus:size=11
-URxvt*boldFont: xft:Terminus:bold:size=11
-URxvt*italicFont: xft:Terminus:italic:size=11
+URxvt*font: xft:Terminus:size=11,\
+            xft:DejaVu Sans Mono:style=Book:pixelsize=12,\
+            xft:Unifont:pixelsize:16
+URxvt*boldFont: xft:Terminus:bold:size=11,\
+                xft:DejaVu Sans Mono:style=Book:pixelsize=12,\
+                xft:Unifont:pixelsize:16
+URxvt*italicFont: xft:Terminus:italic:size=11,\
+                  xft:DejaVu Sans Mono:style=Book:pixelsize=12,\
+                  xft:Unifont:pixelsize:16
 
 !! printf '\e]710;%s\007' "xft:Terminus:pixelsize=12"
 !! echo -e "\e[3mitalic\e[m"

@@ -9,3 +9,5 @@
 	smtpServerPort = 587
 [core]
 	editor = vim
+[url "git@github.com:"]
+	insteadOf = https://github.com/

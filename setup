@@ -3,6 +3,26 @@
 # Fail fast
 set -e
 
+usage() { echo "Usage: $0 [-z] [-c]" 1>&2; exit 1; }
+
+while getopts ":zc" o; do
+    echo "opt: ${o}"
+    case "${o}" in
+        z)
+            # Change default shell to ZSH
+            USE_ZSH="yes"
+            ;;
+        c)
+            # install Z shell configuration
+            CHSH="yes"
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
 # This method doesn't seem to work in FreeBSD's Bourne shell-compatible (sh)
 # http://stackoverflow.com/a/246128/6740471
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
@@ -110,3 +130,15 @@ backupfile ~/.local/share/nvim/site/autoload/plug.vim
 ln -sf ~/.dotfiles/.vimrc ~/.config/nvim/init.vim
 ln -sf ~/.vim/autoload/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
 command -v nvim > /dev/null && nvim +PlugInstall +UpdateRemotePlugins +qall
+
+if [ ! -z $USE_ZSH ]; then
+    # zsh setup
+    git clone https://github.com/robbyrussell/oh-my-zsh.git \
+        ~/.oh-my-zsh > /dev/null 2>&1 | true
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
+        ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions > /dev/null 2>&1 | true
+
+    if [ ! -z $CHSH ] && command -v zsh > /dev/null 2>&1; then
+        chsh -s $(which zsh)
+    fi
+fi

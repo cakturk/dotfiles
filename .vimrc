@@ -109,6 +109,23 @@ set nocompatible
 filetype plugin indent on
 syntax on
 
+" https://www.reddit.com/r/vim/comments/8se9ug/changing_cursor_in_different_modes_with_tmux/?depth=1
+" Changing cursor shape per mode
+" 1 or 0 -> blinking block
+" 2 -> solid block
+" 3 -> blinking underscore
+" 4 -> solid underscore
+if exists('$TMUX')
+    " tmux will only forward escape sequences to the terminal if surrounded by a DCS sequence
+    let &t_SI .= "\<Esc>Ptmux;\<Esc>\<Esc>[4 q\<Esc>\\"
+    let &t_EI .= "\<Esc>Ptmux;\<Esc>\<Esc>[2 q\<Esc>\\"
+    " autocmd VimLeave * silent !echo -ne "\033Ptmux;\033\033[0 q\033\\"
+else
+    let &t_SI .= "\<Esc>[4 q"
+    let &t_EI .= "\<Esc>[2 q"
+    " autocmd VimLeave * silent !echo -ne "\033[0 q"
+endi
+
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 set nocscopeverbose
@@ -408,6 +425,10 @@ let g:fzf_buffers_jump = 1
 " vim-go
 let g:go_fmt_command = "goimports"
 let g:go_fmt_fail_silently = 1
+let g:go_list_type = "quickfix"
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+" au FileType go setlocal omnifunc=go#complete#GocodeComplete
 
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1

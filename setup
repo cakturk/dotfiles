@@ -87,6 +87,16 @@ if [ "$OS" != "Darwin" ] && has_x11; then
     mkdir -p "$i3confdir"
     ln -sf "$DIR/config" "$i3conf"
 
+    # i3status
+    backupfile "$HOME/.config/i3status/config"
+    mkdir -p "$HOME/.config/i3status"
+    ln -sf "$DIR/i3status.conf" "$HOME/.config/i3status/config"
+
+    # dunst
+    backupfile "$HOME/.config/dunst/dunstrc"
+    mkdir -p "$HOME/.config/dunst"
+    ln -sf "$DIR/dunstrc" "$HOME/.config/dunst/dunstrc"
+
     COMMON_FILES="$COMMON_FILES $X11_FILES"
 fi
 

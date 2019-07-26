@@ -4,7 +4,11 @@ Xft.rgba: rgb
 Xft.autohint: false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
-/* Xft.dpi: 96 */
+
+#ifdef SRVR_yoga
+Xft.dpi: 220
+#endif
+
 /* Xcursor.size:	24 */
 Xcursor.theme:	Adwaita
 

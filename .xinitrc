@@ -49,6 +49,10 @@ xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
 # key repeat threshold and rate
 xset r rate 300 58
 
+if [ $HOSTNAME = "yoga" ]; then
+    xrandr --dpi 220
+fi
+
 # Prefix launch of session with ssh-agent if available and not already running.
 if [ -z "$SSH_AGENT" ] && [ -z "$SSH_AUTH_SOCK" ] && [ -z "$SSH_AGENT_PID" ] \
     && [ -x /usr/bin/ssh-agent ]; then

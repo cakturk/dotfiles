@@ -97,9 +97,14 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Taken from the configfiles of Michael Stapelberg
+# Print timing statistics for everything which takes longer than 5 seconds of
+# user + system time ('sleep 6' does not work because of 0% user/system time!).
+REPORTTIME=5
+
 # How to get rid of “No match found” when running “rm *”
 # https://unix.stackexchange.com/a/310553
-# setopt +o nomatch
+setopt +o nomatch
 
 # unset LESS, because it causes 'git-log' to always pipe through less
 unset LESS

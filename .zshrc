@@ -105,6 +105,8 @@ REPORTTIME=5
 # How to get rid of “No match found” when running “rm *”
 # https://unix.stackexchange.com/a/310553
 setopt +o nomatch
+setopt HIST_REDUCE_BLANKS
+setopt HIST_FIND_NO_DUPS
 
 # unset LESS, because it causes 'git-log' to always pipe through less
 unset LESS

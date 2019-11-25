@@ -37,6 +37,10 @@ fi
 # xsessionrc
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 
+# set background color and wallpaper
+xsetroot -solid "#333333"
+[ -f ~/.fehbg ] && bash -c ~/.fehbg
+
 # run local xhost
 xhost local:root
 
@@ -62,6 +66,9 @@ if [ -z "$SSH_AGENT" ] && [ -z "$SSH_AUTH_SOCK" ] && [ -z "$SSH_AGENT_PID" ] \
 		SSH_AGENT="/usr/bin/ssh-agent"
 	fi
 fi
+
+# screen saver and sleep lock
+xss-lock --transfer-sleep-lock -- i3lock --nofork &
 
 # uncomment this if not using a login manager
 # so i3 will start correctly

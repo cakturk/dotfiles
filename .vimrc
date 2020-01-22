@@ -31,13 +31,15 @@ Plug 'ervandew/supertab'
 Plug 'vivien/vim-linux-coding-style'
 Plug 'flazz/vim-colorschemes'
 if v:version >= 800
-    Plug 'w0rp/ale', { 'on': [] }
+    Plug 'dense-analysis/ale', { 'on': [] }
     augroup ale_loader
         autocmd!
         autocmd InsertEnter *
                     \  if &ft =~# '^\%(c\|cpp\|go\|python\)$'
                     \|     call plug#load('ale')
                     \|     let g:ale_sign_column_always = 1
+                    \|     let g:ale_linters = {'go': ['golangci-lint', 'gofmt', 'govet']}
+                    \|     let g:ale_go_golangci_lint_options = ""
                     \|     execute 'autocmd! ale_loader'
                     \| endif
     augroup END
@@ -52,13 +54,18 @@ if has('nvim')
                 \ 'do': 'bash install.sh',
                 \ }
 
+"     let g:LanguageClient_serverCommands = {
+"                 \ 'c': ['cquery',
+"                 \ '--log-file=/tmp/cq.log',
+"                 \ '--init={"cacheDirectory":"/tmp/cquery/"}'],
+"                 \ 'cpp': ['cquery',
+"                 \ '--log-file=/tmp/cq.log',
+"                 \ '--init={"cacheDirectory":"/tmp/cquery/"}']
+"                 \ }
+
     let g:LanguageClient_serverCommands = {
-                \ 'c': ['cquery',
-                \ '--log-file=/tmp/cq.log',
-                \ '--init={"cacheDirectory":"/tmp/cquery/"}'],
-                \ 'cpp': ['cquery',
-                \ '--log-file=/tmp/cq.log',
-                \ '--init={"cacheDirectory":"/tmp/cquery/"}']
+                \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+                \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
                 \ }
 
     let g:LanguageClient_diagnosticsDisplay =  {
@@ -95,6 +102,24 @@ if has('nvim')
 
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#enable_at_startup = 1
+    function SetLSPShortcuts()
+        nnoremap <leader>gd :call LanguageClient#textDocument_definition()<CR>
+        nnoremap <leader>gr :call LanguageClient#textDocument_rename()<CR>
+        nnoremap <leader>gf :call LanguageClient#textDocument_formatting()<CR>
+        nnoremap <leader>gt :call LanguageClient#textDocument_typeDefinition()<CR>
+        nnoremap <leader>gx :call LanguageClient#textDocument_references()<CR>
+        nnoremap <leader>ga :call LanguageClient_workspace_applyEdit()<CR>
+        nnoremap <leader>gc :call LanguageClient#textDocument_completion()<CR>
+        nnoremap <leader>gh :call LanguageClient#textDocument_hover()<CR>
+        nnoremap <leader>gs :call LanguageClient_textDocument_documentSymbol()<CR>
+        nnoremap <leader>gm :call LanguageClient_contextMenu()<CR>
+    endfunction()
+
+    augroup LSP
+        autocmd!
+        autocmd FileType cpp,c call SetLSPShortcuts()
+    augroup END
+
 endif
 
 call plug#end()
@@ -143,6 +168,7 @@ set matchtime=1
 set number
 set synmaxcol=300
 set switchbuf=useopen,usetab
+set autoread
 " set relativenumber
 set scrolloff=1
 set encoding=utf-8
@@ -152,6 +178,7 @@ set timeout timeoutlen=600 ttimeoutlen=10
 set ignorecase
 set smartcase
 set incsearch
+set fillchars=vert:\│
 " Highlight strings matched by the search pattern
 if &hlsearch == 0
     set hls
@@ -194,26 +221,34 @@ set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
 
-if has('mac')
+" if has('mac')
     " https://github.com/vim/vim/issues/993#issuecomment-255651605
     set termguicolors
 
     " set Vim-specific sequences for RGB colors
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
+" endif
 
 augroup vimrc
     autocmd!
     autocmd FileType vim setlocal keywordprg=:Help
     autocmd FileType help setlocal keywordprg=:help
     autocmd FileType help,vim nnoremap <silent><buffer> q :q<CR>
+    autocmd BufReadPost fugitive://* set bufhidden=wipe
 augroup END
 
 " Automatically scale internal windows on terminal resize
 augroup resize_splits
     autocmd!
     autocmd VimResized * silent! Tabdo wincmd =
+
+    " Position the (global) quickfix window at the very bottom of the window
+    " (useful for making sure that it appears underneath splits)
+    "
+    " NOTE: Using a check here to make sure that window-specific location-lists
+    " aren't effected, as they use the same `FileType` as quickfix-lists.
+    autocmd FileType qf if (getwininfo(win_getid())[0].loclist != 1) | wincmd J | endif
 augroup END
 
 if has('nvim')
@@ -313,6 +348,10 @@ augroup compile_run_maps
     autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
     autocmd Filetype python let b:dispatch='python %' | nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
     autocmd Filetype go nnoremap <buffer> <silent> <leader>r :GoRun %<CR>
+    autocmd Filetype go nnoremap <buffer> <silent> <leader>gg :GoBuild<CR>
+    autocmd Filetype go nnoremap <buffer> <silent> <leader>gf :GoTestFunc<CR>
+    autocmd Filetype go nnoremap <buffer> <silent> <leader>gt :GoTest<CR>
+    autocmd Filetype go nnoremap <buffer> <silent> <leader>gc :GoTestCompile<CR>
 augroup END
 
 " vim-commentary

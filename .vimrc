@@ -25,6 +25,7 @@ Plug 'junegunn/fzf.vim'
 
 " Standard plugins
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rsi'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
@@ -472,6 +473,8 @@ let g:go_info_mode='gopls'
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
 
+" UltiSnips
+let g:UltiSnipsSnippetDirectories = ["UltiSnips", "gosnippets/UltiSnips"]
 " }}}
 
 " ======================================================================

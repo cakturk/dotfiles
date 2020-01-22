@@ -30,7 +30,8 @@ font pango:monospace 8
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvt256cc
+# bindsym $mod+Return exec urxvt256cc
+bindsym $mod+Return exec st
 
 # kill focused window
 bindsym $mod+c kill
@@ -166,7 +167,12 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        #tray_output primary
+        # tray_output primary
+        colors {
+            background #333333
+            statusline #ffffff
+        }
+
 }
 
 # Disable mouse warping
@@ -182,13 +188,13 @@ for_window [class="(?i)nm-connection-editor"] floating enable
 for_window [class="(?i)pavucontrol"] floating enable
 
 # exec --no-startup-id xrandr --dpi 220
-exec --no-startup-id urxvt256cd -q -o -f
+# exec --no-startup-id urxvt256cd -q -o -f
 # exec --no-startup-id setxkbmap -option caps:escape
 # exec --no-startup-id setxkbmap -option 'caps:ctrl_modifier'
 # exec --no-startup-id setxkbmap -layout us,tr -option grp:alt_shift_toggle
 # exec --no-startup-id xset r rate 300 58
 # exec --no-startup-id xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
-exec --no-startup-id xsetroot -solid "#333333"
+# exec --no-startup-id xsetroot -solid "#333333"
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
 exec --no-startup-id unclutter --timeout 3
@@ -196,9 +202,10 @@ exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Tapping En
 exec --no-startup-id xinput set-prop 'Synaptics TM3066-002' 'libinput Natural Scrolling Enabled' 1
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
+bindsym XF86AudioPlay exec --no-startup-id playerctl -a play-pause
 bindsym $mod+Shift+t exec --no-startup-id i3lock -f -e -c 000000 -d -I 5 -i ~/Pictures/curiosity_1.png
 
 # Sreen brightness controls

@@ -17,7 +17,7 @@ Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 " Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 Plug 'tpope/vim-commentary', { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-dispatch', { 'on': 'Dispatch' }
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go', 'tag': '*' }
 Plug 'majutsushi/tagbar', { 'on': ['TagbarToggle', 'TagbarDebug'] }
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }

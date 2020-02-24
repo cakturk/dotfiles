@@ -533,7 +533,10 @@ function! s:closehiddenbuffers()
     " close any buffer that are loaded and not visible
     let l:tally = 0
     for b in range(1, bufnr('$'))
-        if bufname(b) !=# "GoToFile" && buflisted(b) && !has_key(visible, b)
+        if !bufexists(b) || bufname(b) ==# "GoToFile"
+            continue
+        endif
+        if !has_key(visible, b)
             let l:tally += 1
             exe 'bwipeout' . b
         endif

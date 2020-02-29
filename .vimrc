@@ -51,77 +51,30 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 if has('nvim')
-    Plug 'autozimu/LanguageClient-neovim', {
-                \ 'branch': 'next',
-                \ 'do': 'bash install.sh',
-                \ }
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-"     let g:LanguageClient_serverCommands = {
-"                 \ 'c': ['cquery',
-"                 \ '--log-file=/tmp/cq.log',
-"                 \ '--init={"cacheDirectory":"/tmp/cquery/"}'],
-"                 \ 'cpp': ['cquery',
-"                 \ '--log-file=/tmp/cq.log',
-"                 \ '--init={"cacheDirectory":"/tmp/cquery/"}']
-"                 \ }
-
-    let g:LanguageClient_serverCommands = {
-                \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-                \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-                \ }
-
-    let g:LanguageClient_diagnosticsDisplay =  {
-                \ 1: {
-                \    "name": "Error",
-                \    "texthl": "ALEError",
-                \    "signText": "✖",
-                \    "signTexthl": "ALEErrorSign",
-                \    "virtualTexthl": "Error",
-                \ },
-                \ 2: {
-                \    "name": "Warning",
-                \    "texthl": "ALEWarning",
-                \    "signText": "⚠",
-                \    "signTexthl": "ALEWarningSign",
-                \    "virtualTexthl": "Todo",
-                \ },
-                \ 3: {
-                \    "name": "Information",
-                \    "texthl": "ALEInfo",
-                \    "signText": "ℹ",
-                \    "signTexthl": "ALEInfoSign",
-                \    "virtualTexthl": "Todo",
-                \ },
-                \ 4: {
-                \    "name": "Hint",
-                \    "texthl": "ALEInfo",
-                \    "signText": "➤",
-                \    "signTexthl": "ALEInfoSign",
-                \    "virtualTexthl": "Todo",
-                \ },
-                \ }
-
-
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    let g:deoplete#enable_at_startup = 1
-    function SetLSPShortcuts()
-        nnoremap <leader>gd :call LanguageClient#textDocument_definition()<CR>
-        nnoremap <leader>gr :call LanguageClient#textDocument_rename()<CR>
-        nnoremap <leader>gf :call LanguageClient#textDocument_formatting()<CR>
-        nnoremap <leader>gt :call LanguageClient#textDocument_typeDefinition()<CR>
-        nnoremap <leader>gx :call LanguageClient#textDocument_references()<CR>
-        nnoremap <leader>ga :call LanguageClient_workspace_applyEdit()<CR>
-        nnoremap <leader>gc :call LanguageClient#textDocument_completion()<CR>
-        nnoremap <leader>gh :call LanguageClient#textDocument_hover()<CR>
-        nnoremap <leader>gs :call LanguageClient_textDocument_documentSymbol()<CR>
-        nnoremap <leader>gm :call LanguageClient_contextMenu()<CR>
+    function s:setcocmaps()
+        nmap <silent><leader>gd <Plug>(coc-definition)
+        nmap <silent><leader>gr <Plug>(coc-rename)
+        nmap <silent><leader>gt <Plug>(coc-type-definition)
+        nmap <silent><leader>gx <Plug>(coc-references)
+        nmap <silent><leader>gi <Plug>(coc-implementation)
+        " Applying codeAction to the selected region.
+        " Example: `<leader>aap` for current paragraph
+        xmap <silent><leader>ga <Plug>(coc-codeaction-selected)
+        nmap <silent><leader>ga <Plug>(coc-codeaction-selected)
+        nmap <silent><leader>gc <Plug>(coc-fix-current)
+        nmap <silent><leader>gh <Plug>(coc-codeaction)
+        nnoremap <silent><leader>gj :call CocAction('doHover')<CR>
+        nnoremap <silent><leader>gf :call CocAction('format')<CR>
+        xmap <silent><leader>gs <Plug>(coc-format-selected)
+        nmap <silent><leader>gm <Plug>(coc-format-selected)
     endfunction()
 
-    augroup LSP
+    augroup coc_maps
         autocmd!
-        autocmd FileType cpp,c call SetLSPShortcuts()
+        autocmd FileType cpp,c,go,python call s:setcocmaps()
     augroup END
-
 endif
 
 call plug#end()
@@ -175,7 +128,9 @@ set autoread
 set scrolloff=1
 set encoding=utf-8
 set autowrite      " Automatically save before commands like :next and :make
-set lazyredraw
+if !has('nvim')
+    set lazyredraw
+endif
 set timeout timeoutlen=600 ttimeoutlen=10
 set ignorecase
 set smartcase

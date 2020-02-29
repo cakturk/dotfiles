@@ -26,6 +26,7 @@ Plug 'junegunn/fzf.vim'
 " Standard plugins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rsi'
+Plug 'tpope/vim-surround'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'

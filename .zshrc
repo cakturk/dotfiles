@@ -101,6 +101,10 @@ source $ZSH/oh-my-zsh.sh
 # autoload -U compinit
 compinit
 
+# https://stackoverflow.com/q/444951
+# WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+WORDCHARS='-|&'
+
 # Taken from the configfiles of Michael Stapelberg
 # Print timing statistics for everything which takes longer than 5 seconds of
 # user + system time ('sleep 6' does not work because of 0% user/system time!).

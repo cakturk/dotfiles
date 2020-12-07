@@ -4,12 +4,7 @@
 call plug#begin('~/.vim/plugged')
 
 " Group dependencies, vim-snippets depends on ultisnips
-Plug 'SirVer/ultisnips', { 'on': [] } | Plug 'honza/vim-snippets'
-augroup ultisnips_loader
-    autocmd!
-    autocmd InsertEnter * call plug#load('ultisnips', 'vim-snippets')
-                \| autocmd! ultisnips_loader
-augroup END
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -32,20 +27,27 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
 Plug 'vivien/vim-linux-coding-style'
 Plug 'flazz/vim-colorschemes'
-if v:version >= 800
-    Plug 'dense-analysis/ale', { 'on': [] }
-    augroup ale_loader
-        autocmd!
-        autocmd InsertEnter *
-                    \  if &ft =~# '^\%(c\|cpp\|go\|python\)$'
-                    \|     call plug#load('ale')
-                    \|     let g:ale_sign_column_always = 1
-                    \|     let g:ale_linters = {'go': ['golangci-lint', 'gofmt', 'govet']}
-                    \|     let g:ale_go_golangci_lint_options = ""
-                    \|     execute 'autocmd! ale_loader'
-                    \| endif
-    augroup END
-endif
+
+Plug 'dense-analysis/ale', { 'for': ['c', 'c++', 'go', 'python'] }
+let g:ale_disable_lsp = 1
+let g:ale_sign_error = "✖"
+let g:ale_sign_warning = "⚠"
+let g:ale_sign_column_always = 1
+let g:ale_linters = {'go': ['golangci-lint', 'gofmt', 'govet']}
+let g:ale_c_parse_makefile = 1
+let g:ale_go_golangci_lint_options = ""
+let g:ale_lint_delay = 1000
+let g:ale_cpp_ccls_init_options = {
+            \   'cache': {
+            \       'directory': '/tmp/ccls-cache'
+            \   }
+            \ }
+let g:ale_c_ccls_init_options = {
+            \   'cache': {
+            \       'directory': '/tmp/ccls-cache'
+            \   }
+            \ }
+
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -53,22 +55,45 @@ Plug 'vim-airline/vim-airline-themes'
 if has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+    " https://github.com/neoclide/coc.nvim/issues/576#issuecomment-632446784
+    " https://github.com/neoclide/coc.nvim/issues/1054#issuecomment-619343648
+    function! s:goto_tag(kind) abort
+        let tagname = expand('<cWORD>')
+        let winnr = winnr()
+        let pos = getcurpos()
+        let pos[0] = bufnr()
+
+        if CocAction('jump' . a:kind)
+            call settagstack(winnr, {
+                        \ 'curidx': gettagstack()['curidx'],
+                        \ 'items': [{'tagname': tagname, 'from': pos}]
+                        \ }, 't')
+        endif
+    endfunction
+
     function s:setcocmaps()
-        nmap <silent><leader>gd <Plug>(coc-definition)
-        nmap <silent><leader>gr <Plug>(coc-rename)
-        nmap <silent><leader>gt <Plug>(coc-type-definition)
-        nmap <silent><leader>gx <Plug>(coc-references)
-        nmap <silent><leader>gi <Plug>(coc-implementation)
+        if has("nvim-0.5")
+            nnoremap <silent><buffer><leader>gd :call <SID>goto_tag('Definition')<CR>
+            nnoremap <silent><buffer><C-]> :call <SID>goto_tag('Definition')<CR>
+            nnoremap <silent><buffer><leader>gx :call <SID>goto_tag('References')<CR>
+        else
+            nmap <silent><buffer><C-]> <Plug>(coc-definition)
+            nmap <silent><buffer><leader>gd <Plug>(coc-definition)
+            nmap <silent><buffer><leader>gx <Plug>(coc-references)
+        endif
+        nmap <silent><buffer><leader>gr <Plug>(coc-rename)
+        nmap <silent><buffer><leader>gt <Plug>(coc-type-definition)
+        nmap <silent><buffer><leader>gi <Plug>(coc-implementation)
         " Applying codeAction to the selected region.
         " Example: `<leader>aap` for current paragraph
-        xmap <silent><leader>ga <Plug>(coc-codeaction-selected)
-        nmap <silent><leader>ga <Plug>(coc-codeaction-selected)
-        nmap <silent><leader>gc <Plug>(coc-fix-current)
-        nmap <silent><leader>gh <Plug>(coc-codeaction)
-        nnoremap <silent><leader>gj :call CocAction('doHover')<CR>
-        nnoremap <silent><leader>gf :call CocAction('format')<CR>
-        xmap <silent><leader>gs <Plug>(coc-format-selected)
-        nmap <silent><leader>gm <Plug>(coc-format-selected)
+        xmap <silent><buffer><leader>ga <Plug>(coc-codeaction-selected)
+        nmap <silent><buffer><leader>ga <Plug>(coc-codeaction-selected)
+        nmap <silent><buffer><leader>gc <Plug>(coc-fix-current)
+        nmap <silent><buffer><leader>gh <Plug>(coc-codeaction)
+        nnoremap <silent><buffer><leader>gj :call CocAction('doHover')<CR>
+        nnoremap <silent><buffer><leader>gf :call CocAction('format')<CR>
+        xmap <silent><buffer><leader>gs <Plug>(coc-format-selected)
+        nmap <silent><buffer><leader>gm <Plug>(coc-format-selected)
     endfunction()
 
     augroup coc_maps
@@ -178,14 +203,30 @@ set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
 set directory=~/.vim/.swp//
 
-" if has('mac')
-    " https://github.com/vim/vim/issues/993#issuecomment-255651605
-    set termguicolors
+" https://github.com/vim/vim/issues/993#issuecomment-255651605
+set termguicolors
 
-    " set Vim-specific sequences for RGB colors
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-" endif
+" set Vim-specific sequences for RGB colors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+" Put these in an autocmd group, so that you can revert them with:
+" :augroup vimStartup | au! | augroup END"
+if !exists("#fedora")
+    augroup vimStartup
+        au!
+
+        " When editing a file, always jump to the last known cursor position.
+        " Don't do it when the position is invalid, when inside an event handler
+        " (happens when dropping a file on gvim) and for a commit message (it's
+        " likely a different one than last time).
+        autocmd BufReadPost *
+                    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+                    \ |   exe "normal! g`\""
+                    \ | endif
+
+    augroup END
+endif
 
 augroup vimrc
     autocmd!
@@ -198,7 +239,7 @@ augroup END
 " Automatically scale internal windows on terminal resize
 augroup resize_splits
     autocmd!
-    autocmd VimResized * silent! Tabdo wincmd =
+    " autocmd VimResized * silent! Tabdo wincmd =
 
     " Position the (global) quickfix window at the very bottom of the window
     " (useful for making sure that it appears underneath splits)
@@ -213,6 +254,9 @@ if has('nvim')
 endif
 
 " Colorscheme settings
+let g:gruvbox_contrast_dark='soft'
+let g:gruvbox_contrast_light='hard'
+let g:seoul256_background = 236
 let g:solarized_termcolors=256
 silent! colorscheme seoul256
 " }}}
@@ -297,7 +341,7 @@ inoremap jj <Esc>
 
 augroup compile_run_maps
     autocmd!
-    autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>7 :Dispatch make<CR>
+    autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>7 :<c-u>Dispatch make<CR>
     autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
     autocmd Filetype c nnoremap <buffer> <silent> <leader>4 :Dispatch cc % -o %< -Wall<CR>
     autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>

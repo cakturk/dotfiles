@@ -9,5 +9,7 @@
 	smtpServerPort = 587
 [core]
 	editor = vim
-[url "git@github.com:"]
-	insteadOf = https://github.com/
+[alias]
+	glog = log --date-order --graph --all --date=short --pretty=format:'%x09%C(auto)%h  %C(cyan)%ad  %C(green)%<(12,trunc)%aN    %C(reset)%<(50,trunc)%s    %C(auto)%d'
+; [url "git@github.com:"]
+; 	insteadOf = https://github.com/

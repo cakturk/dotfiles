@@ -136,8 +136,10 @@ vim +PlugInstall +qall
 mkdir -p ~/.local/share/nvim/site/autoload
 mkdir -p ~/.config/nvim
 backupfile ~/.config/nvim/init.vim
+backupfile ~/.config/nvim/coc-settings.json
 backupfile ~/.local/share/nvim/site/autoload/plug.vim
 ln -sf ~/.dotfiles/.vimrc ~/.config/nvim/init.vim
+ln -sf ~/.dotfiles/coc-settings.json ~/.config/nvim/
 ln -sf ~/.vim/autoload/plug.vim ~/.local/share/nvim/site/autoload/plug.vim
 command -v nvim > /dev/null && nvim +PlugInstall +UpdateRemotePlugins +qall
 

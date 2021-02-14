@@ -1,4 +1,5 @@
 {
+    "coc.preferences.useQuickfixForLocations": true,
     "diagnostic.displayByAle": true,
     "languageserver": {
         "ccls": {

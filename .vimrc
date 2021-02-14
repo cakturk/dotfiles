@@ -32,6 +32,7 @@ Plug 'dense-analysis/ale', { 'for': ['c', 'c++', 'go', 'python'] }
 let g:ale_disable_lsp = 1
 let g:ale_sign_error = "✖"
 let g:ale_sign_warning = "⚠"
+let g:ale_set_highlights = 0
 let g:ale_sign_column_always = 1
 let g:ale_linters = {'go': ['golangci-lint', 'gofmt', 'govet']}
 let g:ale_c_parse_makefile = 1
@@ -349,10 +350,9 @@ augroup compile_run_maps
     autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
     autocmd Filetype python let b:dispatch='python %' | nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
     autocmd Filetype go nnoremap <buffer> <silent> <leader>r :GoRun %<CR>
-    autocmd Filetype go nnoremap <buffer> <silent> <leader>gg :GoBuild<CR>
+    autocmd Filetype go nnoremap <buffer> <silent> <leader>gg :<C-u>call <SID>build_go_files()<CR>
     autocmd Filetype go nnoremap <buffer> <silent> <leader>gf :GoTestFunc<CR>
     autocmd Filetype go nnoremap <buffer> <silent> <leader>gt :GoTest<CR>
-    autocmd Filetype go nnoremap <buffer> <silent> <leader>gc :GoTestCompile<CR>
 augroup END
 
 " vim-commentary
@@ -563,4 +563,17 @@ function! s:trimtrailingws()
         :%s/\s\+$//g
     endif
 endfunction
+
+" vim-go
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+    let l:file = expand('%')
+    if l:file =~# '^\f\+_test\.go$'
+        call go#test#Test(0, 1)
+    elseif l:file =~# '^\f\+\.go$'
+        call go#cmd#Build(0)
+    endif
+endfunction
+
+
 " }}}

@@ -271,7 +271,7 @@ augroup vimrc
     autocmd FileType vim setlocal keywordprg=:Help
     autocmd FileType help setlocal keywordprg=:help
     autocmd FileType help,vim nnoremap <silent><buffer> q :q<CR>
-    autocmd BufReadPost fugitive://* set bufhidden=wipe
+    autocmd BufReadPost fugitive://* set bufhidden=delete
 augroup END
 
 " Automatically scale internal windows on terminal resize

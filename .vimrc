@@ -50,8 +50,9 @@ let g:ale_c_ccls_init_options = {
             \ }
 
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 
 function MyTabLine()
     let s = ''
@@ -88,7 +89,7 @@ function MyTabLine()
     return s
 endfunction
 " set tabline=%!MyTabLine()
-" setglobal statusline=[%n]\ %<%.99f\ %y%h%w%m%r%{FugitiveStatusline()}%=%-14.(%8l/%L%)\ %P
+setglobal statusline=[%n]\ %<%.99f\ %y%h%w%m%r%{FugitiveStatusline()}%=%-14.(%8l/%L%)\ %P
 
 if has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -498,6 +499,13 @@ let g:fzf_colors = {
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
+
+" lightline settings
+let g:lightline = {}
+let g:lightline.enable = {
+            \ 'statusline': 0,
+            \ 'tabline': 1
+            \ }
 
 " vim-go
 let g:go_fmt_command = "goimports"

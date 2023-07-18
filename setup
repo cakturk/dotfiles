@@ -125,6 +125,7 @@ mkdir -p $HOME/.mutt/cache
 
 export GIT_SSL_NO_VERIFY=true
 git clone --depth 1 https://github.com/tmux-plugins/tmux-yank ~/.tmux/plugins/tmux-yank || true
+git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect ~/.tmux/plugins/tmux-resurrect || true
 
 mkdir -p ~/.vim/.backup ~/.vim/.swp ~/.vim/.undo
 mkdir -p ~/.vim/autoload

@@ -382,10 +382,10 @@ augroup compile_run_maps
     autocmd!
     autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>7 :<c-u>Dispatch make<CR>
     autocmd Filetype c,cpp nnoremap <buffer> <silent> <leader>8 :Dispatch make check<CR>
-    autocmd Filetype c nnoremap <buffer> <silent> <leader>4 :Dispatch cc % -o %< -Wall<CR>
-    autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc % -o %< -Wall && %:p:r<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>4 :Dispatch c++ --std=c++11 % -o %< -Wall<CR>
-    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ --std=c++11 % -o %< -Wall && %:p:r<CR>
+    autocmd Filetype c nnoremap <buffer> <silent> <leader>4 :Dispatch cc -g % -o %< -Wall<CR>
+    autocmd Filetype c nnoremap <buffer> <silent> <leader>5 :Dispatch cc -g % -o %< -Wall && %:p:r<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>4 :Dispatch c++ -g --std=c++11 % -o %< -Wall<CR>
+    autocmd Filetype cpp nnoremap <buffer> <silent> <leader>5 :Dispatch c++ -g --std=c++11 % -o %< -Wall && %:p:r<CR>
     autocmd Filetype python let b:dispatch='python %' | nnoremap <buffer> <silent> <leader>5 :Dispatch<CR>
     autocmd Filetype go nnoremap <buffer> <silent> <leader>r :GoRun %<CR>
     autocmd Filetype go nnoremap <buffer> <silent> <leader>gg :<C-u>call <SID>build_go_files()<CR>

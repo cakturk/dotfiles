@@ -19,16 +19,18 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Standard plugins
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-obsession'
 Plug 'simplyzhao/cscope_maps.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ervandew/supertab'
 Plug 'vivien/vim-linux-coding-style'
 Plug 'flazz/vim-colorschemes'
 
-Plug 'dense-analysis/ale', { 'for': ['c', 'c++', 'go', 'python'] }
+Plug 'dense-analysis/ale', { 'for': ['c', 'cpp', 'cgo', 'python'] }
 let g:ale_disable_lsp = 1
 let g:ale_sign_error = "✖"
 let g:ale_sign_warning = "⚠"
@@ -36,6 +38,7 @@ let g:ale_set_highlights = 0
 let g:ale_sign_column_always = 1
 let g:ale_linters = {'go': ['golangci-lint', 'gofmt', 'govet']}
 let g:ale_c_parse_makefile = 1
+let g:ale_c_parse_compile_commands = 1
 let g:ale_go_golangci_lint_options = ""
 let g:ale_lint_delay = 1000
 let g:ale_cpp_ccls_init_options = {
@@ -172,7 +175,6 @@ endi
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-set nocscopeverbose
 set ruler		" show the cursor position all the time
 set visualbell
 set mouse=ni
@@ -193,6 +195,7 @@ set scrolloff=1
 set encoding=utf-8
 set autowrite      " Automatically save before commands like :next and :make
 if !has('nvim')
+    set nocscopeverbose
     set lazyredraw
 endif
 set timeout timeoutlen=600 ttimeoutlen=10
@@ -226,6 +229,7 @@ augroup indent_group
 augroup end
 
 set wildignore=*.o,*.obj,*~,*.ko
+set wildignorecase
 set sessionoptions-=options
 set formatoptions+=j " Delete comment character when joining commented lines
 set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+

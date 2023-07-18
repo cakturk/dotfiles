@@ -103,7 +103,7 @@ compinit
 
 # https://stackoverflow.com/q/444951
 # WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
-WORDCHARS='-|&'
+WORDCHARS='-|&~'
 
 # Taken from the configfiles of Michael Stapelberg
 # Print timing statistics for everything which takes longer than 5 seconds of
@@ -115,6 +115,9 @@ REPORTTIME=5
 setopt +o nomatch
 setopt HIST_REDUCE_BLANKS
 setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
 
 # Remove duplicates in PATH
 typeset -U PATH path
@@ -158,7 +161,7 @@ esac
 
 MANWIDTH=80
 GOPATH=$HOME/$SRCDIR/gocode
-PATH=$PATH:$HOME/.local/bin:$HOME/bin:$GOPATH/bin
+PATH=/usr/local/go/bin:$PATH:$HOME/.local/bin:$HOME/bin:$GOPATH/bin
 EDITOR=vim
 
 export PATH GOPATH MANWIDTH EDITOR

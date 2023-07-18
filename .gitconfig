@@ -9,7 +9,11 @@
 	smtpServerPort = 587
 [core]
 	editor = vim
+[commit]
+	verbose = true
 [alias]
 	glog = log --date-order --graph --all --date=short --pretty=format:'%x09%C(auto)%h  %C(cyan)%ad  %C(green)%<(12,trunc)%aN    %C(reset)%<(50,trunc)%s    %C(auto)%d'
+	s = status -sb
+	lg = log --branches --remotes --tags --graph --oneline --decorate
 ; [url "git@github.com:"]
 ; 	insteadOf = https://github.com/

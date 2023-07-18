@@ -3,3 +3,6 @@
 
 # cscope files
 cscope.*
+
+# compilation database
+compile_commands.json

@@ -429,7 +429,7 @@ endif
 " ======================================================================
 " Commands {{{
 " ======================================================================
-command! -bar -count=0 RFC :e https://tools.ietf.org/rfc/rfc<count>.txt|setl ro noma
+command! -bar -count=0 RFC :silent e https://tools.ietf.org/rfc/rfc<count>.txt|setl ro noma|redraw!
 command! -bar Invert :let &background = (&background=="light"?"dark":"light")
 command! -nargs=+ -complete=command Tabdo call <SID>tabdo(<q-args>)
 command! -nargs=* -complete=help Help call <SID>clever_split('help', <f-args>)

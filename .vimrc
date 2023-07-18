@@ -238,9 +238,15 @@ set splitright
 
 " put backup and swap files in a fixed directory to keep things more organized
 set undofile
-set undodir=~/.vim/.undo//
-set backupdir=~/.vim/.backup//
-set directory=~/.vim/.swp//
+if has('nvim')
+    set undodir=~/.config/nvim/undo/
+    set backupdir=~/.config/nvim/backup/
+    set directory=~/.config/nvim/swp/
+else
+    set undodir=~/.vim/.undo/
+    set backupdir=~/.vim/.backup/
+    set directory=~/.vim/.swp/
+endif
 
 " https://github.com/vim/vim/issues/993#issuecomment-255651605
 set termguicolors

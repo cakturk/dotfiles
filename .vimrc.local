@@ -1,0 +1,13 @@
+" local settings
+set wildignorecase
+set path+=**
+
+" local mappings
+nnoremap <silent> <C-p> :Windows<CR>
+nnoremap <silent><leader>tg :tab G \| tabmove 0<CR>
+nnoremap <M-o>:tab G \| tabmove 0<CR>
+
+aug vimrclocal
+    au!
+    au BufEnter,BufNew *.map,*.rules set commentstring=#%s
+aug END

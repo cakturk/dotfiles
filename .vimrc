@@ -620,5 +620,8 @@ function! s:build_go_files()
     endif
 endfunction
 
+if filereadable(expand('~/.vimrc.local'))
+    source ~/.vimrc.local
+endif
 
 " }}}

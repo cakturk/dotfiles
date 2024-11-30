@@ -92,7 +92,7 @@ function MyTabLine()
     return s
 endfunction
 " set tabline=%!MyTabLine()
-setglobal statusline=[%n]\ %<%.99f\ %y%h%w%m%r%{FugitiveStatusline()}%=%-14.(%8l/%L%)\ %P
+setglobal statusline=[%n]\ %<%.99f\ %y%h%w%m%r%{FugitiveStatusline()}%=%-14.(%8l/%L%)\ %-3v\ %P
 
 if has('nvim')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
